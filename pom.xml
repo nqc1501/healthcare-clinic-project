@@ -15,6 +15,7 @@
         <module>payment-service</module>
         <module>diagnosis-service</module>
         <module>service-management</module>
+        <module>room-service</module>
     </modules>
 
     <parent>

@@ -1,5 +1,7 @@
 package com.example.supplyservice.models;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @MappedSuperclass
@@ -16,10 +19,14 @@ import java.math.BigDecimal;
 public class Item implements Serializable {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
-    private String type;
-    private String howToUse;
-    private BigDecimal price;
     private Integer quantity;
+    private String unit;
+    private BigDecimal price;
+    private Date expiryDate;
+    private Date manufacturingDate;
+    private String usage;
+    private String description;
 }

@@ -1,5 +1,6 @@
 package com.example.serivcemanagement.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,6 @@ public class Specialist {
     private Integer id;
     private String name;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "service_id", referencedColumnName = "id")
-    private List<Service> listService;
+    @JoinColumn(name = "specialist_id", referencedColumnName = "id")
+    private List<Service> listServices;
 }

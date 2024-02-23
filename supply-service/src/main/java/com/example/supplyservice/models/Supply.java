@@ -12,4 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Supply extends Item {
+
+    private Double length;
+    private Double width;
 }

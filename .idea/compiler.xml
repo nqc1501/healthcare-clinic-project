@@ -16,6 +16,7 @@
         <module name="schedule-service" />
         <module name="api-gateway" />
         <module name="diagnosis-service" />
+        <module name="room-service" />
         <module name="user-service" />
       </profile>
     </annotationProcessing>
@@ -32,6 +33,7 @@
       <module name="diagnosis-service" options="-parameters" />
       <module name="discovery-server" options="-parameters" />
       <module name="payment-service" options="-parameters" />
+      <module name="room-service" options="-parameters" />
       <module name="schedule-service" options="-parameters" />
       <module name="service-management" options="-parameters" />
       <module name="supply-service" options="-parameters" />
