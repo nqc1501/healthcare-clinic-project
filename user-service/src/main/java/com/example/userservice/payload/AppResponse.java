@@ -1,6 +1,6 @@
 package com.example.userservice.payload;
 
-import com.example.userservice.constants.AppError;
+import com.example.userservice.constant.AppError;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,6 +1,6 @@
 package com.example.authservice.payload;
 
-import com.example.authservice.constants.AppError;
+import com.example.authservice.constant.AppError;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;

@@ -51,6 +51,27 @@ spring:
           filters:
             - AuthFilter
 
+        - id: service-management
+          uri: http://localhost:9001
+          predicates:
+            - Path=/api/v1/service-management/**
+          filters:
+            - AuthFilter
+
+        - id: supply-service
+          uri: http://localhost:9003
+          predicates:
+            - Path=/api/v1/item/**
+          filters:
+            - AuthFilter
+
+        - id: room-service
+          uri: http://localhost:9004
+          predicates:
+            - Path=/api/v1/room/**
+          filters:
+            - AuthFilter
+
 eureka:
   client:
     service-url:

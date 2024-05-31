@@ -1,6 +1,6 @@
 package com.example.roomservice.payload;
 
-import com.example.roomservice.constants.AppError;
+import com.example.roomservice.constant.AppError;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletResponse;

@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
     <modules>
+        <module>auth-service</module>
         <module>user-service</module>
         <module>discovery-server</module>
         <module>api-gateway</module>
-        <module>auth-service</module>
         <module>supply-service</module>
         <module>appointment-service</module>
         <module>schedule-service</module>
@@ -16,6 +16,8 @@
         <module>diagnosis-service</module>
         <module>service-management</module>
         <module>room-service</module>
+        <module>auth-service</module>
+        <module>auth-service</module>
     </modules>
 
     <parent>
