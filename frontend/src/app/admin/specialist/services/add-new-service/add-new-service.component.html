@@ -1,0 +1,19 @@
+<div mat-dialog-title>
+  <h1>{{ isEdit ? 'Sửa thông tin' : 'Thêm dịch vụ' }}</h1>
+</div>
+
+<div>
+  <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+    <div mat-dialog-content>
+      <mat-form-field appearance="outline">
+        <mat-label> Nhập tên dịch vụ </mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+    </div>
+
+    <div mat-dialog-actions class="action">
+      <button mat-raised-button type="button" [mat-dialog-close]="false" color="accent"> Hủy </button>
+      <button mat-raised-button color="primary" type="submit"> Lưu </button>
+  </div>
+  </form>
+</div>

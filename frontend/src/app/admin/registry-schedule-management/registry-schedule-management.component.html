@@ -1,0 +1,64 @@
+<div class="container">
+    <mat-form-field appearance="outline">
+        <mat-label> Bác sĩ </mat-label>
+        <mat-select (selectionChange)="onSelectedDoctor($event.value)">
+            <mat-option *ngFor="let doctor of listDoctor" [value]="doctor">
+                {{doctor.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef> Stt </mat-header-cell>
+                <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="startDate">
+                <mat-header-cell *matHeaderCellDef> Ngày bắt đầu </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{formatDate(element.shift.startDate)}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="endDate">
+                <mat-header-cell *matHeaderCellDef> Ngày kết thúc </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{formatDate(element.shift.endDate)}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="dayOfWeek">
+                <mat-header-cell *matHeaderCellDef> Ngày trong tuần </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.shift.dayOfWeek}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="startTime">
+                <mat-header-cell *matHeaderCellDef> Giờ bắt đầu </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.shift.startTime}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="endTime">
+                <mat-header-cell *matHeaderCellDef> Giờ kết thúc </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.shift.endTime}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="room">
+                <mat-header-cell *matHeaderCellDef> Phòng </mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                    <mat-form-field appearance="outline">
+                        <mat-label> Phòng </mat-label>
+                        <mat-select (selectionChange)="onSelectedRoom($event.value, element.shift.id)">
+                            <mat-option *ngFor="let room of listRoom" [value]="room">
+                                {{room.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+    </div>
+    
+    <button mat-raised-button color="primary" (click)="onSave()" style="margin-top: 20px;"> Lưu thông tin </button>
+</div>

@@ -1,0 +1,103 @@
+<div class="container">
+    <form class="form-container" [formGroup]="doctorForm" (ngSubmit)="onFormSubmit()">
+        <div class="card">
+            <div class="info-container">
+                <h2 class="title">Thông tin đăng nhập</h2>
+
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="text" formControlName="email">
+                    </mat-form-field>
+    
+                    <mat-form-field appearance="outline">
+                        <mat-label>Mật khẩu</mat-label>
+                        <input matInput type="password" formControlName="password">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label>Nhập lại mật khẩu</mat-label>
+                        <input matInput type="password" formControlName="confirmPassword">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="info-container">
+                <h2 class="title">Thông tin cá nhân</h2>
+    
+                <div class="row">
+                    <div class="image-container">
+                        <input type="file" (change)="chooseImage($event)" accept=".jpg" id="fileInput" 
+                        style="display: none;" formControlName="image">
+            
+                        <div class="image-preview" (click)="openFileInput()">
+                            <img *ngIf="imageUrl" [src]="imageUrl" alt="">
+                            <mat-icon *ngIf="!imageUrl">add_a_photo</mat-icon>
+                        </div>
+                    </div>
+                    <div class="column">
+                        <div class="row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Họ tên</mat-label>
+                                <input matInput type="text" formControlName="name">
+                            </mat-form-field>
+            
+                            <mat-form-field appearance="outline">
+                                <mat-label>Ngày sinh</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="birthday">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+            
+                        <div class="row">
+                            <mat-radio-group formControlName="gender">
+                                <mat-radio-button value="male">Nam</mat-radio-button>
+                                <mat-radio-button value="female">Nữ</mat-radio-button>
+                                <mat-radio-button value="none">Khác</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+            
+                        <div class="row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Số điện thoại</mat-label>
+                                <input matInput type="text" formControlName="tel">
+                            </mat-form-field>
+            
+                            <mat-form-field appearance="outline">
+                                <mat-label>Địa chỉ</mat-label>
+                                <input matInput type="text" formControlName="address">
+                            </mat-form-field>
+                        </div>
+            
+                        <div class="row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Chuyên ngành</mat-label>
+                                <mat-select formControlName="specialist">
+                                    <mat-option value="Đa khoa">Đa khoa</mat-option>
+                                    <mat-option value="Phụ sản">Phụ sản</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+            
+                            <mat-form-field appearance="outline">
+                                <mat-label>Bằng cấp</mat-label>
+                                <input matInput type="text" formControlName="degree">
+                            </mat-form-field>
+                        </div>
+            
+                        <div class="row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Giới thiệu</mat-label>
+                                <textarea matInput type="text" formControlName="about"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit">Lưu thông tin</button>
+    </form>
+</div>

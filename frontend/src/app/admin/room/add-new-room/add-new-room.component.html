@@ -1,0 +1,45 @@
+<div mat-dialog-title>
+    <h1>{{ data ? 'Sửa thông tin' : 'Thêm phòng' }}</h1>
+</div>
+<div>
+    <form [formGroup]="roomForm" (ngSubmit)="onFormSubmit()">
+        <div mat-dialog-content>
+            <div class="column">
+                <mat-form-field appearance="outline">
+                    <mat-label> Tên phòng </mat-label>
+                    <input matInput type="text" formControlName="name">
+                </mat-form-field>
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label> Chuyên ngành </mat-label>
+                        <mat-select (selectionChange)="onSelectionChange()" formControlName="specialist">
+                            <mat-option *ngFor="let specialist of listSpecialist" [value]="specialist.id">
+                                {{ specialist.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="roomForm.get('specialist').hasError('required')">
+                            Vui lòng chọn chuyên ngành.
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label> Chức năng </mat-label>
+                        <mat-select formControlName="function">
+                            <mat-option *ngFor="let service of selectedSpecialist?.listServices" [value]="service.id">
+                                {{ service.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="roomForm.get('function').hasError('required')">
+                            Vui lòng chọn chức năng.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div mat-dialog-actions class="action">
+            <button mat-raised-button type="button" [mat-dialog-close]="false" color="accent"> Hủy </button>
+            <button mat-raised-button color="primary" type="submit"> Lưu </button>
+        </div>
+    </form>
+</div>

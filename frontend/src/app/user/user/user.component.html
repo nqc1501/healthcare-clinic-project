@@ -1,0 +1,53 @@
+<!-- header -->
+<div class="navbar">
+    <div class="logo">
+        <img src="assets/logo.png" alt="Logo" style="cursor: pointer;" (click)="toDashboard()">
+    </div>
+    <span class="spacer"></span>
+    <div class="top-bar-left" style="margin-left: 50px;">
+        <div class="top-bar-left">
+            <mat-icon style="margin-right: 5px;">mail</mat-icon>
+            <a href="mailto:support@gmail.com">
+                <span>support&#64;mail.com</span>
+            </a>
+        </div>
+        <div class="top-bar-left">
+            <mat-icon>location_on</mat-icon>
+            <a>
+                <span>123 Đường ABC, Quận 1, TP.HCM</span>
+            </a>
+        </div>
+    </div>
+    <div class="top-bar-right" style="margin-right: 50px;">
+        <mat-icon style="margin-right: 5px;">phone_in_talk</mat-icon>
+        <a href="tel:+84-345-6789">
+            <span>0123456789</span>
+        </a>
+    </div>
+
+    <div class="row">
+        <span style="cursor: pointer;" (click)="openRegisterForm()">Đăng ký</span>
+        <div class="separator"></div>
+        <span style="cursor: pointer;" (click)="openLoginForm()">Đăng nhập</span>
+    </div>
+</div>
+<!-- header -->
+
+<mat-toolbar class="toolbar">
+    <div *ngFor="let buttonMenu of buttonMenus">
+        <span *ngIf="!buttonMenu.options" (click)="navigateToLink(buttonMenu.link)" style="cursor: pointer;">{{ buttonMenu.label }}</span>
+        <span *ngIf="buttonMenu.options" [matMenuTriggerFor]="menu" style="cursor: pointer;">{{ buttonMenu.label }}</span>
+        <mat-menu #menu="matMenu">
+            <span *ngFor="let option of buttonMenu.options" (click)="navigateToLink(option.link)" class="button-menu">
+                {{ option.label }}
+            </span>
+        </mat-menu>
+    </div>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
+
+<mat-divider></mat-divider>
+<footer>
+    &copy; All rights reserved 2019
+</footer>

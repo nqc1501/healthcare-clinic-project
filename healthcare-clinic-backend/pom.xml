@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>healthcare-clinic-backend</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>api-gateway</module>
+        <module>auth-service</module>
+        <module>user-service</module>
+        <module>discovery-server</module>
+        <module>billing-service</module>
+        <module>facility-scheduling-service</module>
+        <module>appointment-healthcare-service</module>
+        <module>response-handling</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+</project>
