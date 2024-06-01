@@ -26,7 +26,7 @@ export class DynamicFlatNode {
 @Injectable({providedIn: 'root'})
 export class DynamicDatabase {
   dataMap = new Map<string, string[]>([
-    ['Quản lý bác sỹ', ['Thêm mới bác sỹ', 'Danh sách bác sỹ']],
+    ['Quản lý bác sỹ', ['Danh sách bác sỹ']],
     ['Quản lý bệnh nhân', ['Thêm mới bệnh nhân', 'Danh sách bệnh nhân']],
     ['Quản lý phòng khám', ['Danh sách phòng khám']],
     ['Quản lý dịch vụ', ['Thêm mới chuyên ngành', 'Danh sách chuyên ngành']],
@@ -34,7 +34,6 @@ export class DynamicDatabase {
 
   linkMap = new Map<string, string>([
     ['Trang chủ', '/admin/dashboard'],
-    ['Thêm mới bác sỹ', '/admin/create-new-doctor'],
     ['Danh sách bác sỹ', '/admin/list-doctors'],
     ['Thêm mới bệnh nhân', '/admin/add-new-patient'],
     ['Danh sách bệnh nhân', '/admin/list-patients'],

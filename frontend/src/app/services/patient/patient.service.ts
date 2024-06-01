@@ -24,11 +24,11 @@ export class PatientService {
   }
 
   getAllPatient() {
-    return this.http.get<[]>(URL + '/find-all');
+    return this.http.get<[]>(URL);
   }
 
   getById(id: string): Observable<any> {
-    return this.http.get( URL + '/find-by-id/' + id);
+    return this.http.get( URL + '/' + id);
   }
 
 }

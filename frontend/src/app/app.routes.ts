@@ -4,7 +4,6 @@ import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.com
 import { HealhServiceComponent } from './user/healh-service/healh-service.component';
 import { UserComponent } from './user/user/user.component';
 import { AdminComponent } from './admin/admin/admin.component';
-import { CreateDoctorComponent } from './admin/doctor/create-doctor/create-doctor.component';
 import { DoctorListComponent } from './admin/doctor/doctor-list/doctor-list.component';
 import { LoginComponent } from './admin/login/login.component';
 import { AdminGuard } from './auth/guards/admin-guard/admin-guard.guard';
@@ -37,7 +36,6 @@ export const routes: Routes = [
             { path: 'login', component: LoginComponent, canActivate: [NoGuard] },
             { path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard] },
             // xử lý về bác sỹ
-            { path: 'create-new-doctor', component: CreateDoctorComponent, canActivate: [AdminGuard] }, 
             { path: 'list-doctors', component: DoctorListComponent, canActivate: [AdminGuard] },
             // xử lý về bệnh nhân
             { path: 'list-patient', component: ListPatientComponent, canActivate: [AdminGuard] },
