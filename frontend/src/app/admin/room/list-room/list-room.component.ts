@@ -53,7 +53,7 @@ export class MyCustomPaginatorIntl implements MatPaginatorIntl {
 export class ListRoomComponent implements AfterViewInit {
 
   displayedColumns: string[] = [
-    'position', 'name', 'function', 'edit', 'delete'
+    'position', 'name', 'function', 'action'
   ];
   dataSource = new MatTableDataSource<any>;
 
@@ -61,7 +61,6 @@ export class ListRoomComponent implements AfterViewInit {
 
   constructor(
     private sRoom: RoomService,
-    private sSpecialist: SpecialistService,
     private dialog: MatDialog,
     private snackbar: MatSnackBar
   ) { }
@@ -84,27 +83,11 @@ export class ListRoomComponent implements AfterViewInit {
   }
 
   getAllRooms() {
-    const listRooms: { id: number, name: string, serviceId: number, serviceName: string }[] = [];
-
     this.sRoom.getAllRooms().subscribe({
-      next: (response) => {
-        this.sSpecialist.findAllServices().subscribe({
-          next: (res) => {
-            for (const r of response) {
-              const service = res.find(s => s.id === r.serviceId).name;
-
-              if (service) {
-                listRooms.push({
-                  id: r.id,
-                  name: r.name,
-                  serviceId: r.serviceId,
-                  serviceName: service
-                });
-              }
-            }
-            this.dataSource = new MatTableDataSource(listRooms);
-          }
-        });
+      next: (res) => {
+        console.log(res);
+        this.dataSource = new MatTableDataSource(res);
+        this.dataSource.paginator = this.paginator;
       },
       error: (err) => {
         console.log(err);

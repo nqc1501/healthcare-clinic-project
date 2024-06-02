@@ -1,6 +1,7 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.model.Doctor;
+import com.example.userservice.payload.ScheduleRequest;
 import com.example.userservice.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,11 @@ public class DoctorController {
     @PostMapping("/upload-image")
     public ResponseEntity<?> uploadImage(@RequestBody String image) {
         return ResponseEntity.ok(sDoctor.uploadImage(image));
+    }
+
+    @PostMapping("/{id}/register-shift")
+    public ResponseEntity<?> registerShift(@PathVariable String id, @RequestBody ScheduleRequest scheduleRequest) {
+        return ResponseEntity.ok(sDoctor.registerShift(id, scheduleRequest));
     }
 
     @PutMapping
