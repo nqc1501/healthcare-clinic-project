@@ -33,6 +33,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public List<Doctor> getAllBySpecialtyId(Integer specialtyId) {
+        return rDoctor.findBySpecialtyId(specialtyId);
+    }
+
+    @Override
     public AppResponse addDoctor(Doctor doctor) {
         try {
             rDoctor.save(doctor);

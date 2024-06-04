@@ -1,4 +1,4 @@
-package com.example.facilityscheduling.payload;
+package com.example.facilityscheduling.payload.req;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

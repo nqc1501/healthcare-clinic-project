@@ -22,7 +22,7 @@ public class User implements Serializable {
     private Integer credentialId;
     private String name;
     @Lob
-    @Column(columnDefinition = "MEDIUMLOB")
+    @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
     private Date birthday;
     private String gender;

@@ -1,6 +1,8 @@
 package com.example.facilityscheduling.service.impl;
 
+import com.example.facilityscheduling.model.Floor;
 import com.example.facilityscheduling.model.Room;
+import com.example.facilityscheduling.repository.FloorRepository;
 import com.example.facilityscheduling.repository.RoomRepository;
 import com.example.facilityscheduling.service.RoomService;
 import com.example.responsehandling.payload.response.AppResponse;
@@ -16,6 +18,9 @@ public class RoomServiceImpl implements RoomService {
     @Autowired
     RoomRepository rRoom;
 
+    @Autowired
+    FloorRepository rFloor;
+
     @Override
     public List<Room> getAllRoom() {
         return rRoom.findAll();
@@ -24,6 +29,23 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public Room getById(Integer id) {
         return rRoom.findById(id).orElse(null);
+    }
+
+    @Override
+    public AppResponse getRoomsBySpecialtyId(Integer specialtyId) {
+        try {
+            Floor floor = rFloor.findBySpecialtyId(specialtyId).orElse(null);
+
+            if (floor == null) {
+                return new AppResponse("Tầng nhà không tồn tại", false);
+            }
+
+            return new AppResponse(rRoom.findByFloorId(floor.getId()));
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new AppResponse("Đã xảy ra lỗi", false);
+        }
     }
 
     @Override

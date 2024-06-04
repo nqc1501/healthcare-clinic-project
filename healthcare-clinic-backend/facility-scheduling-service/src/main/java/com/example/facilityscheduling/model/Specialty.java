@@ -18,7 +18,4 @@ public class Specialty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "specialty_id", referencedColumnName = "id")
-    private List<Service> listServices;
 }

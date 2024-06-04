@@ -11,6 +11,8 @@ public interface RoomService {
 
     Room getById(Integer id);
 
+    AppResponse getRoomsBySpecialtyId(Integer specialtyId);
+
     AppResponse addRoom(Room room);
 
     AppResponse updateRoom(Room room);

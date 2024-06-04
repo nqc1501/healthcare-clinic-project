@@ -1,7 +1,7 @@
 package com.example.facilityscheduling.controller;
 
 import com.example.facilityscheduling.model.Shift;
-import com.example.facilityscheduling.payload.ScheduleRequest;
+import com.example.facilityscheduling.payload.req.ScheduleRequest;
 import com.example.facilityscheduling.service.ShiftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

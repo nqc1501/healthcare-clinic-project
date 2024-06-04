@@ -12,6 +12,8 @@ public interface DoctorService {
 
     Doctor getById(String id);
 
+    List<Doctor> getAllBySpecialtyId(Integer specialtyId);
+
     AppResponse addDoctor(Doctor doctor);
 
     AppResponse registerShift(String doctorId, ScheduleRequest scheduleRequest);
@@ -21,5 +23,4 @@ public interface DoctorService {
     AppResponse updateDoctor(Doctor doctor);
 
     AppResponse deleteDoctor(String id);
-
 }

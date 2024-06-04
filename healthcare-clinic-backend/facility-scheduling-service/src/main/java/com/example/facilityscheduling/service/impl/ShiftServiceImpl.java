@@ -2,7 +2,7 @@ package com.example.facilityscheduling.service.impl;
 
 import com.example.facilityscheduling.model.Schedule;
 import com.example.facilityscheduling.model.Shift;
-import com.example.facilityscheduling.payload.ScheduleRequest;
+import com.example.facilityscheduling.payload.req.ScheduleRequest;
 import com.example.facilityscheduling.repository.ScheduleRepository;
 import com.example.facilityscheduling.repository.ShiftRepository;
 import com.example.facilityscheduling.service.ShiftService;

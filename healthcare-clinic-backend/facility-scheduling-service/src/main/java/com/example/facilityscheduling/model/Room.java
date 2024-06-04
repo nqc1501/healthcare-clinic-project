@@ -15,6 +15,9 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "floor_id", referencedColumnName = "id")
+    private Floor floor;
     @Column(unique = true)
     private String name;
     private String functionName;
