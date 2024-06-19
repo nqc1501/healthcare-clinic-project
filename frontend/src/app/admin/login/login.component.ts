@@ -44,8 +44,7 @@ export class LoginComponent {
         this.loginForm.value.password
       ).subscribe({
         next: (res) => {
-          this.sAuth.signIn();
-          this.sStorage.saveJwtToken(res.data.token);
+          console.log(res);
           this.sStorage.saveId(res.data.id);
           this.sStorage.saveRole(res.data.role);
           this.router.navigateByUrl('/admin/dashboard');

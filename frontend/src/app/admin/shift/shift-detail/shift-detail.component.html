@@ -1,0 +1,74 @@
+<div mat-dialog-title>
+    <h1>{{ data ? 'Sửa thông tin' : 'Thêm ca làm việc' }}</h1>
+</div>
+<div>
+    <form [formGroup]="shiftForm" (ngSubmit)="onFormSubmit()">
+        <div mat-dialog-content>
+            <div class="column">
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label> Ngày bắt đầu </mat-label>
+                        <input matInput type="text" formControlName="startDate">
+                        <!-- <input matInput [matDatepicker]="picker" formControlName="startDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-hint>dd/MM/yyyy</mat-hint>
+                        <mat-datepicker #picker></mat-datepicker> -->
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label> Ngày kết thúc </mat-label>
+                        <input matInput type="text" formControlName="endDate">
+                        <!-- <input matInput [matDatepicker]="ePicker" formControlName="endDate">
+                        <mat-datepicker-toggle matIconSuffix [for]="ePicker"></mat-datepicker-toggle>
+                        <mat-hint>dd/MM/yyyy</mat-hint>
+                        <mat-datepicker #ePicker></mat-datepicker> -->
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label> Ngày trong tuần </mat-label>
+                        <input matInput type="text" formControlName="dayOfWeek">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label> Trạng thái chọn </mat-label>
+                        <mat-select formControlName="isSelected">
+                            <mat-option [value]="true"> Khóa </mat-option>
+                            <mat-option [value]="false"> Mở </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label> Giờ bắt đầu </mat-label>
+                        <input matInput type="text" formControlName="startTime">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label> Giờ kết thúc </mat-label>
+                        <input matInput type="text" formControlName="endTime">
+                    </mat-form-field>
+                </div>
+
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label> Số lượng </mat-label>
+                        <input matInput type="text" formControlName="quantity">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label> Đã đăng ký </mat-label>
+                        <input matInput type="text" formControlName="quantityRegistered">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div mat-dialog-actions class="action">
+            <button mat-raised-button type="button" [mat-dialog-close]="false" color="accent"> Hủy </button>
+            <button mat-raised-button color="primary" type="submit"> Lưu </button>
+        </div>
+    </form>
+</div>

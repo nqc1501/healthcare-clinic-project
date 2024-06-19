@@ -18,7 +18,7 @@ public interface DoctorService {
 
     AppResponse registerShift(String doctorId, ScheduleRequest scheduleRequest);
 
-    AppResponse uploadImage(String image);
+    AppResponse uploadImage(String id, String image);
 
     AppResponse updateDoctor(Doctor doctor);
 

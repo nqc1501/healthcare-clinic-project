@@ -6,21 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/symptom")
 public class SymptomController {
 
     @Autowired
     SymptomService sSymptom;
 
-    @GetMapping("/patient/{patientId}/symptom")
-    public ResponseEntity<?> getByPatientId(@PathVariable String patientId) {
+    @GetMapping
+    public ResponseEntity<?> getByPatientId(@RequestParam String patientId) {
         return ResponseEntity.ok(sSymptom.getByPatientId(patientId));
     }
 
-    @PostMapping("/symptom")
-    public ResponseEntity<?> addSymptom(@RequestBody Symptom symptom) {
-        return ResponseEntity.ok(sSymptom.addSymptom(symptom));
+    @PostMapping
+    public ResponseEntity<?> addSymptom(@RequestParam String patientId, @RequestBody List<Symptom> listSymptom) {
+        return ResponseEntity.ok(sSymptom.addSymptom(patientId, listSymptom));
     }
 }

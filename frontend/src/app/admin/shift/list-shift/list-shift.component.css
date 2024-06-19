@@ -1,16 +1,15 @@
-table {
-    width: 100%;
-}
-  
-.mat-mdc-form-field {
-    font-size: 14px;
-    width: 100%;
-}
-  
-td, th {
-    width: 25%;
+.container {
+    padding: 20px;
 }
 
-.custom-button {
-    margin-top: 20px;
+.mat-column-position,
+.mat-column-start-date,
+.mat-column-end-date,
+.mat-column-day-of-week,
+.mat-column-start-time,
+.mat-column-end-time,
+.mat-column-quantity,
+.mat-column-quantity-registered,
+.mat-column-action {
+    text-align: center;
 }

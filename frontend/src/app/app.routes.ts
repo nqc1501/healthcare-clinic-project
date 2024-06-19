@@ -9,12 +9,9 @@ import { LoginComponent } from './admin/login/login.component';
 import { AdminGuard } from './auth/guards/admin-guard/admin-guard.guard';
 import { NoGuard } from './auth/guards/no-guard/no-guard.guard';
 import { ListRoomComponent } from './admin/room/list-room/list-room.component';
-import { AddNewSupplyComponent } from './admin/item/supply/add-new-supply/add-new-supply.component';
 import { ListSuppliesComponent } from './admin/item/supply/list-supplies/list-supplies.component';
-import { AddNewSpecialistComponent } from './admin/specialist/add-new-specialist/add-new-specialist.component';
 import { DoctorComponent } from './doctor/doctor/doctor.component';
 import { DoctorLoginComponent } from './doctor/doctor-login/doctor-login.component';
-import { ListSpecialistsComponent } from './admin/specialist/list-specialists/list-specialists.component';
 import { ListMedicationComponent } from './admin/item/medication/list-medication/list-medication.component';
 import { ListShiftComponent } from './admin/shift/list-shift/list-shift.component';
 import { DoctorDashboardComponent } from './doctor/doctor-dashboard/doctor-dashboard.component';
@@ -27,6 +24,8 @@ import { DoctorTestResultComponent } from './doctor/doctor-test-result/doctor-te
 import { RegistryScheduleManagementComponent } from './admin/registry-schedule-management/registry-schedule-management.component';
 import { AppointmentComponent } from './user/appointment/appointment.component';
 import { MedicalInformationComponent } from './user/medical-information/medical-information.component';
+import { ListAppointmentComponent } from './admin/appointment/list-appointment/list-appointment.component';
+import { DoctorGuard } from './auth/guards/doctor-guard/doctor-guard.guard';
 
 export const routes: Routes = [
     // admin 
@@ -36,22 +35,20 @@ export const routes: Routes = [
             { path: 'login', component: LoginComponent, canActivate: [NoGuard] },
             { path: 'dashboard', component: DashboardComponent, canActivate: [AdminGuard] },
             // xử lý về bác sỹ
-            { path: 'list-doctors', component: DoctorListComponent, canActivate: [AdminGuard] },
+            { path: 'list-doctor', component: DoctorListComponent, canActivate: [AdminGuard] },
             // xử lý về bệnh nhân
-            { path: 'list-patient', component: ListPatientComponent, canActivate: [AdminGuard] },
-            // xử lý về dịch vụ và chuyên ngành
-            { path: 'add-new-specialist', component: AddNewSpecialistComponent, canActivate: [AdminGuard] },
-            { path: 'list-specialist', component: ListSpecialistsComponent, canActivate: [AdminGuard] },
+            { path: 'list-patient/:status', component: ListPatientComponent, canActivate: [AdminGuard] },
             // xử lý về phòng
-            { path: 'list-rooms', component: ListRoomComponent, canActivate: [AdminGuard] },
+            { path: 'list-room', component: ListRoomComponent, canActivate: [AdminGuard] },
             // xử lý về vật tư
-            { path: 'add-new-supply', component: AddNewSupplyComponent, canActivate: [AdminGuard] },
-            { path: 'list-supplies', component: ListSuppliesComponent, canActivate: [AdminGuard] },
+            { path: 'list-supply', component: ListSuppliesComponent, canActivate: [AdminGuard] },
             // xử lý về thuốc
             { path: 'list-medication', component: ListMedicationComponent, canActivate: [AdminGuard] },
-            // xử lý ca làm việc
+            // xử lý về ca làm việc
             { path: 'list-shift', component: ListShiftComponent, canActivate: [AdminGuard] },
-            { path: 'registry-schedule', component: RegistryScheduleManagementComponent, canActivate: [AdminGuard] },
+            { path: 'registry-schedule-management', component: RegistryScheduleManagementComponent, canActivate: [AdminGuard] },
+            // xử lý về lịch hẹn
+            { path: 'list-appointment', component: ListAppointmentComponent, canActivate: [AdminGuard] },
         ]
     },
 
@@ -59,13 +56,13 @@ export const routes: Routes = [
     {
         path: 'doctor', component: DoctorComponent,
         children: [
-            { path: 'login', component: DoctorLoginComponent },
-            { path: 'dashboard', component: DoctorDashboardComponent },
-            { path: 'work-schedule', component: DoctorScheduleComponent },
-            { path: 'register-schedule', component: DoctorRegisterScheduleComponent },
-            { path: 'list-patient', component: DoctorListPatientComponent },
-            { path: 'diagnostic/:id', component: DoctorDiagnosticComponent },
-            { path: 'list-test', component: DoctorTestResultComponent },
+            { path: 'login', component: DoctorLoginComponent, canActivate: [NoGuard] },
+            { path: 'dashboard', component: DoctorDashboardComponent, canActivate: [DoctorGuard] },
+            { path: 'work-schedule', component: DoctorScheduleComponent, canActivate: [DoctorGuard] },
+            { path: 'register-schedule', component: DoctorRegisterScheduleComponent, canActivate: [DoctorGuard] },
+            { path: 'list-patient/:status', component: DoctorListPatientComponent, canActivate: [DoctorGuard] },
+            { path: 'diagnostic/:id', component: DoctorDiagnosticComponent, canActivate: [DoctorGuard] },
+            { path: 'list-test', component: DoctorTestResultComponent, canActivate: [DoctorGuard] },
         ]
     },
 

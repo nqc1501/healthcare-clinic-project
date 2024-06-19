@@ -5,6 +5,7 @@ import com.example.facilityscheduling.service.RoomService;
 import com.example.facilityscheduling.service.SpecialtyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,8 +22,16 @@ public class SpecialtyController {
     RoomService sRoom;
 
     @GetMapping
-    public ResponseEntity<List<Specialty>> getAllSpecialty() {
+    public ResponseEntity<?> getAllSpecialty() {
         return ResponseEntity.ok(sSpecialty.getAllSpecialty());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Integer id) {
+        if (ObjectUtils.isEmpty(id)) {
+            return ResponseEntity.ok(null);
+        }
+        return ResponseEntity.ok(sSpecialty.getById(id));
     }
 
     @GetMapping("/{id}/list-room")

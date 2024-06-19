@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
+import { Observable, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { StorageService } from '../../services/storage/storage.service';
 
 @Injectable({
@@ -8,6 +11,7 @@ import { StorageService } from '../../services/storage/storage.service';
 export class NoGuard implements CanActivate {
 
   constructor(
+    private sAuth: AuthService,
     private sStorage: StorageService,
     private router: Router
   ) { }  
@@ -15,11 +19,27 @@ export class NoGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
-    if (this.sStorage.hasToken && this.sStorage.isAdminLoggedIn()) {
-      this.router.navigateByUrl('/admin/dashboard');
-      return false;
-    }
-    return true;
+  ): Observable<boolean> {
+    return this.sAuth.checkLogin().pipe(
+      switchMap(isLoggedIn => {
+        if (!isLoggedIn) {
+          return of(true);
+        }
+
+        const role = this.sStorage.getRole();
+
+        if (role === 'ADMIN') {
+          this.router.navigateByUrl('/admin/dashboard');
+        } else if (role === 'DOCTOR') {
+          this.router.navigateByUrl('/doctor/dashboard');
+        } else if (role === 'PATIENT') {
+          this.router.navigateByUrl('/dashboard');
+        } else {
+          return of(true);
+        }
+
+        return of(false);
+      })
+    );
   }
 }

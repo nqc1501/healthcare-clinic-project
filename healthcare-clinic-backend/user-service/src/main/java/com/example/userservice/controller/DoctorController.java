@@ -9,43 +9,43 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/doctor")
 public class DoctorController {
 
     @Autowired
     DoctorService sDoctor;
 
-    @GetMapping("/doctor/")
+    @GetMapping
     public ResponseEntity<?> getAllDoctor() {
         return ResponseEntity.ok(sDoctor.getAllDoctor());
     }
 
-    @GetMapping("/doctor/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable String id) {
         return ResponseEntity.ok(sDoctor.getById(id));
     }
 
-    @GetMapping("/specialty/{specialtyId}/list-doctor")
-    public ResponseEntity<?> getAllBySpecialtyId(@PathVariable Integer specialtyId) {
+    @GetMapping("/specialty")
+    public ResponseEntity<?> getAllBySpecialtyId(@RequestParam Integer specialtyId) {
         return ResponseEntity.ok(sDoctor.getAllBySpecialtyId(specialtyId));
     }
 
-    @PostMapping("/doctor/upload-image")
-    public ResponseEntity<?> uploadImage(@RequestBody String image) {
-        return ResponseEntity.ok(sDoctor.uploadImage(image));
+    @PostMapping("/{id}/upload-image")
+    public ResponseEntity<?> uploadImage(@PathVariable String id, @RequestBody String image) {
+        return ResponseEntity.ok(sDoctor.uploadImage(id, image));
     }
 
-    @PostMapping("/doctor/{id}/register-shift")
+    @PostMapping("/{id}/register-shift")
     public ResponseEntity<?> registerShift(@PathVariable String id, @RequestBody ScheduleRequest scheduleRequest) {
         return ResponseEntity.ok(sDoctor.registerShift(id, scheduleRequest));
     }
 
-    @PutMapping("/doctor")
+    @PutMapping
     public ResponseEntity<?> updateDoctor(@RequestBody Doctor doctor) {
         return ResponseEntity.ok(sDoctor.updateDoctor(doctor));
     }
 
-    @DeleteMapping("/doctor/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDoctor(@PathVariable String id) {
         return ResponseEntity.ok(sDoctor.deleteDoctor(id));
     }

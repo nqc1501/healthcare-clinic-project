@@ -75,7 +75,7 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
-    public AppResponse uploadImage(String image) {
+    public AppResponse uploadImage(String id, String image) {
         return null;
     }
 

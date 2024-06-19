@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { StorageService } from '../../auth/services/storage/storage.service';
 
-const URL = ['http://localhost:9005/api/v1/schedule'];
+const URL = ['http://localhost:8080/api/v1/schedule'];
 
 @Injectable({
   providedIn: 'root'
@@ -9,11 +11,15 @@ const URL = ['http://localhost:9005/api/v1/schedule'];
 export class ScheduleService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private storage: StorageService,
   ) { }
 
-  addNewSchedule(listSchedule: any[]) {
-    return this.http.post(URL + '/add-new-schedule', listSchedule);
+  getAllByDoctor(doctorId: string): Observable<any> {
+    return this.http.get<[]>(URL + `/doctor?doctorId=${doctorId}`, {withCredentials: true});
   }
 
+  addRoomToSchedule(id: number, request: any) {
+    return this.http.post(URL + `/${id}/add-room`, request, {withCredentials: true});
+  }
 }

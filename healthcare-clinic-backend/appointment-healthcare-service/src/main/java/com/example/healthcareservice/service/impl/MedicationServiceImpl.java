@@ -33,4 +33,40 @@ public class MedicationServiceImpl implements MedicationService {
             return new AppResponse("Đã xảy ra lỗi", false);
         }
     }
+
+    @Override
+    public AppResponse updateMedication(Medication medication) {
+        try {
+            Medication existingMedication = rMedication.findById(medication.getId()).orElse(null);
+            if (existingMedication == null) {
+                return new AppResponse("Thuốc không tồn tại", false);
+            }
+
+            rMedication.save(medication);
+
+            return new AppResponse("Xóa thuốc thành công", true);
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new AppResponse("Đã xảy ra lỗi", false);
+        }
+    }
+
+    @Override
+    public AppResponse deleteMedication(Integer id) {
+        try {
+            Medication existingMedication = rMedication.findById(id).orElse(null);
+            if (existingMedication == null) {
+                return new AppResponse("Thuốc không tồn tại", false);
+            }
+
+            rMedication.delete(existingMedication);
+
+            return new AppResponse("Xóa thuốc thành công", true);
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new AppResponse("Đã xảy ra lỗi", false);
+        }
+    }
 }

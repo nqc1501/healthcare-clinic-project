@@ -32,23 +32,86 @@ export class AddNewMedicationComponent {
   ) { 
     this.medicationForm = this.fb.group({
       name: ['', Validators.required],
-      quantity: ['', Validators.required],
       unit: ['', Validators.required],
       price: ['', Validators.required],
       expiryDate: ['', Validators.required],
       manufacturingDate: ['', Validators.required],
-      usage: ['', Validators.required],
-      description: ['', Validators.required],
-      length: ['', Validators.required],
-      width: ['', Validators.required]
+      usageInstruction: ['', Validators.required],
+      description: [''],
+      composition: ['', Validators.required],
+      userPersona: ['', Validators.required],
+      caution: ['', Validators.required],
+      storage: ['', Validators.required],
     });
   }
 
   ngOnInit() {
-
+    if (this.data) {
+      this.medicationForm.patchValue({
+        name: this.data.name,
+        unit: this.data.unit,
+        price: this.data.price,
+        expiryDate: this.formatDate(this.data.expiryDate),
+        manufacturingDate: this.formatDate(this.data.manufacturingDate),
+        usageInstruction: this.data.usageInstruction,
+        description: this.data.description,
+        composition: this.data.composition,
+        userPersona: this.data.userPersona,
+        caution: this.data.caution,
+        storage: this.data.storage,
+      });
+    }
   }
 
   onFormSubmit() {
+    if (this.medicationForm.valid) {
+      if (this.data) {
+        const medRequest = this.cvtToMedication(this.medicationForm.value, this.data.id);
+        this.sItem.updateMedication(medRequest).subscribe({
+          next: (res) => {
+            console.log(res);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
+      } else {
+        const medRequest = this.cvtToMedication(this.medicationForm.value, null);
+        this.sItem.addNewMedication(medRequest).subscribe({
+          next: (res) => {
+            console.log(res);
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        });
+      }
+    }
+  }
 
+  formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+  }
+
+  private cvtToMedication(obj: any, id: number) {
+    return {
+      id: id,
+      name: obj.name,
+      unit: obj.unit,
+      price: obj.price,
+      expiryDate: new Date(obj.expiryDate),
+      manufacturingDate: new Date(obj.manufacturingDate),
+      usageInstruction: obj.usageInstruction,
+      description: obj.description,
+      composition: obj.composition,
+      userPersona: obj.userPersona,
+      caution: obj.caution,
+      storage: obj.storage,
+    };
   }
 }

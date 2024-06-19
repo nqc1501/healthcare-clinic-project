@@ -4,10 +4,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { ShiftService } from '../../../services/shift/shift.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { AddNewShiftComponent } from '../add-new-shift/add-new-shift.component';
+import { ShiftService } from '../../../services/shift/shift.service';
+import { ShiftDetailComponent } from '../shift-detail/shift-detail.component';
 
 @Component({
   selector: 'app-list-shift',
@@ -15,11 +16,12 @@ import { AddNewShiftComponent } from '../add-new-shift/add-new-shift.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MatDialogModule,
+    MatInputModule,
+    MatTableModule,
     MatButtonModule,
     MatIconModule,
+    MatDialogModule,
     MatSnackBarModule,
-    MatTableModule
   ],
   templateUrl: './list-shift.component.html',
   styleUrl: './list-shift.component.css'
@@ -27,31 +29,18 @@ import { AddNewShiftComponent } from '../add-new-shift/add-new-shift.component';
 export class ListShiftComponent {
 
   displayedColumns: string[] = [
-    'position', 
-    'name', 
-    'date', 
-    'start', 
-    'end', 
-    'quantity', 
-    'booked', 
-    'status', 
-    'edit', 
-    'delete'
+    'position', 'start-date', 'end-date', 'day-of-week', 'start-time', 'end-time', 'quantity', 'quantity-registered', 'action'
   ];
-  dataSource: MatTableDataSource<any>;
-
-  listShift: any[] = [
-    {name: 'Sáng', date: '12/1/2024', startTime: '4:30', endTime: '6:30', quantityBookOn: 2, quantityBooked: 1}
-  ];
+  dataSource = new MatTableDataSource<any>();
 
   constructor(
     private sShift: ShiftService,
     private dialog: MatDialog,
-    private snackbar: MatSnackBar
-  ) { }
+    private snackbar: MatSnackBar,
+  ) {}
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(this.listShift);
+    this.getAllShift();
   }
 
   getAllShift() {
@@ -66,39 +55,54 @@ export class ListShiftComponent {
   }
 
   openAddForm() {
-    const dialogRef = this.dialog.open(AddNewShiftComponent);
+    const dialogRef = this.dialog.open(ShiftDetailComponent);
     dialogRef.afterClosed().subscribe({
       next: (res) => {
         if (res) {
           this.getAllShift();
         }
+      },
+      error: (err) => {
+        console.log(err);
       }
     });
   }
 
   openEditForm(data: any) {
-    const dialogRef = this.dialog.open(AddNewShiftComponent, {data});
+    const dialogRef = this.dialog.open(ShiftDetailComponent, {data});
     dialogRef.afterClosed().subscribe({
       next: (res) => {
         if (res) {
           this.getAllShift();
         }
+      },
+      error: (err) => {
+        console.log(err);
       }
     });
   }
 
-  openDeleteForm() {
-    const result = window.confirm('Xóa bản ghi này ?');
+  openDeleteForm(id: number) {
+    const result = window.confirm('Xóa ca làm việc này ?');
     if (result) {
-      this.snackbar.open('Bản ghi đã được xóa thành công', 'OK', { duration: 3000 });
+      this.sShift.deleteShift(id).subscribe({
+        next: (res) => {
+          this.getAllShift();
+          this.snackbar.open('Ca làm việc đã được xóa thành công', 'OK', {duration: 3000});
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
     }
   }
 
-  // checkStatus(a: number, b: number): boolean {
-  //   if (a < b) {
-  //     return true;
-  //   }
-  //   return false;
-  // }
+  formatDate(dateString: string) {
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
 
+    return `${day < 10 ? '0' + day : day}/${month < 10 ? '0' + month : month}/${year}`;
+  }
 }

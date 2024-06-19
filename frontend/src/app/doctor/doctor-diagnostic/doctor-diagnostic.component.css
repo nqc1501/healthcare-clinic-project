@@ -23,7 +23,7 @@
 .table-container {
     flex: 1;
     min-width: 0;
-    height: 300px;
+    height: 200px;
     display: flex;
     flex-direction: column;
 }
@@ -55,4 +55,9 @@ span {
 .mat-column-dosage,
 .mat-column-note {
     text-align: center;
+}
+
+.center-cell {
+    display: flex;
+    justify-content: center;
 }

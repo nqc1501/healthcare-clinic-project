@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { StorageService } from '../../auth/services/storage/storage.service';
 
-const URL = ['http://localhost:9005/api/v1/shift'];
+const URL = 'http://localhost:8080/api/v1/shift';
 
 @Injectable({
   providedIn: 'root'
@@ -10,26 +11,30 @@ const URL = ['http://localhost:9005/api/v1/shift'];
 export class ShiftService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
   getAllShift(): Observable<any> {
-    return this.http.get<[]>(URL + '/find-all-shift');
+    return this.http.get<[]>(URL, {withCredentials: true});
   }
 
-  getAllShiftByUser(userId: string): Observable<any> {
-    return this.http.get<[]>(URL + '/find-by-user-id/' + userId);
+  getById(id: number) {
+    return this.http.get(URL + `/${id}`, {withCredentials: true});
   }
 
   addNewShift(request: any) {
-    return this.http.post(URL + '/add-new-shift', request);
+    return this.http.post(URL, request, {withCredentials: true});
   }
 
-  registerByUser(request: any): Observable<any> {
-    return this.http.post(URL + '/register-shift', request);
+  registerByUser(id: number, request: any): Observable<any> {
+    return this.http.post(URL + `/${id}/register-shift`, request, {withCredentials: true});
   }
 
   updateShift(request: any) {
-    return this.http.put(URL + '/update-shift', request);
+    return this.http.put(URL, request, {withCredentials: true});
+  }
+
+  deleteShift(id: number) {
+    return this.http.delete(URL + `/${id}`, {withCredentials: true});
   }
 }

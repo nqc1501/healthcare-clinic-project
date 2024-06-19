@@ -27,20 +27,22 @@ export class DynamicFlatNode {
 export class DynamicDatabase {
   dataMap = new Map<string, string[]>([
     ['Quản lý bác sỹ', ['Danh sách bác sỹ']],
-    ['Quản lý bệnh nhân', ['Thêm mới bệnh nhân', 'Danh sách bệnh nhân']],
+    ['Quản lý bệnh nhân', ['Danh sách đang chờ', 'Danh sách đã khám']],
     ['Quản lý phòng khám', ['Danh sách phòng khám']],
-    ['Quản lý dịch vụ', ['Thêm mới chuyên ngành', 'Danh sách chuyên ngành']],
+    ['Quản lý vật tư', ['Danh sách thuốc', 'Danh sách thiết bị']],
   ]);
 
   linkMap = new Map<string, string>([
     ['Trang chủ', '/admin/dashboard'],
-    ['Danh sách bác sỹ', '/admin/list-doctors'],
-    ['Thêm mới bệnh nhân', '/admin/add-new-patient'],
-    ['Danh sách bệnh nhân', '/admin/list-patients'],
-    ['Danh sách phòng khám', '/admin/list-rooms'],
-    ['Thêm mới chuyên ngành', '/admin/add-new-specialist'],
-    ['Danh sách chuyên ngành', '/admin/list-specialist'],
-    ['Quản lý đăng ký lịch', '/admin/registry-schedule'],
+    ['Danh sách bác sỹ', '/admin/list-doctor'],
+    ['Danh sách đang chờ', '/admin/list-patient/waiting'],
+    ['Danh sách đã khám', '/admin/list-patient/completed'],
+    ['Danh sách phòng khám', '/admin/list-room'],
+    ['Danh sách thuốc', 'admin/list-medication'],
+    ['Danh sách thiết bị', 'admin/list-supply'],
+    ['Quản lý ca làm việc', '/admin/list-shift'],
+    ['Quản lý đăng ký lịch', '/admin/registry-schedule-management'],
+    ['Quản lý hẹn khám', '/admin/list-appointment'],
   ]);
 
   rootLevelNodes: string[] = [
@@ -48,8 +50,10 @@ export class DynamicDatabase {
     'Quản lý bác sỹ', 
     'Quản lý bệnh nhân', 
     'Quản lý phòng khám',
-    'Quản lý dịch vụ',
-    'Quản lý đăng ký lịch'
+    'Quản lý vật tư',
+    'Quản lý ca làm việc',
+    'Quản lý đăng ký lịch',
+    'Quản lý hẹn khám'
   ];
 
   initialData(): DynamicFlatNode[] {
@@ -184,7 +188,7 @@ export class SidebarComponent {
 
   constructor(
     private router: Router,
-    database: DynamicDatabase
+    database: DynamicDatabase,
   ) { 
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, database);
@@ -198,7 +202,6 @@ export class SidebarComponent {
 
   nodeClicked(node: DynamicFlatNode) {
     this.router.navigateByUrl(node.link);
-    console.log(node.link);
   }
 
 }

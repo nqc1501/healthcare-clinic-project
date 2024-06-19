@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { StorageService } from '../../auth/services/storage/storage.service';
 
-const URL = ['http://localhost:9003/api/v1/item'];
+const URL = ['http://localhost:8080/api/v1'];
 
 @Injectable({
   providedIn: 'root'
@@ -12,40 +12,39 @@ export class ItemService {
 
   constructor(
     private http: HttpClient,
-    private storage: StorageService
   ) { }
 
   // supply
   findAllSupplies(): Observable<any> {
-    return this.http.get<[]>(URL + '/supply/find-all-supplies');
+    return this.http.get<[]>(URL + '/supply', {withCredentials: true});
   }
 
-  addNewSupply(request: any) {
-    return this.http.post(URL + '/supply/add-new-supply', request);
+  addNewSupply(supply: any) {
+    return this.http.post(URL + '/supply', supply, {withCredentials: true});
   }
 
-  updateSupply(request: any) {
-    return this.http.put(URL + '/supply/update-supply', request);
+  updateSupply(supply: any) {
+    return this.http.put(URL + '/supply', supply, {withCredentials: true});
+  }
+ 
+  deleteSupply(id: number) {
+    return this.http.delete(URL + `/supply/${id}`, {withCredentials: true});
   }
 
   // medication
   findAllMedication() {
-    return this.http.get<[]>(URL + '/medication/find-all-medication');
+    return this.http.get<[]>(URL + '/medication', {withCredentials: true});
   }
 
-  addNewMedication(request: any) {
-    return this.http.post(URL + '/medication/add-new-medication', request);
+  addNewMedication(medication: any) {
+    return this.http.post(URL + '/medication', medication, {withCredentials: true});
   }
 
-  updateMedication(request: any) {
-    return this.http.put(URL + '/medication/update-medication', request);
+  updateMedication(medication: any) {
+    return this.http.put(URL + '/medication', medication, {withCredentials: true});
   }
 
-  // authenticate
-  createAuthorizationHeader(): HttpHeaders {
-    let authHeader : HttpHeaders = new HttpHeaders();
-    return authHeader.set(
-      "Authorization", "Bearer " + this.storage.getJwtFromCookie()
-    );
+  deleteMedication(id: number) {
+    return this.http.delete(URL + `/medication/${id}`, {withCredentials: true});
   }
 }

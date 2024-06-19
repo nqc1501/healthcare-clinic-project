@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import java.util.List;
+
 @Service
 public class DiagnosisServiceImpl implements DiagnosisService {
 
@@ -23,13 +25,13 @@ public class DiagnosisServiceImpl implements DiagnosisService {
     @Override
     public AppResponse getDiagnosisByPatientId(String patientId, AppointmentRequest request) {
         try {
-            Appointment appointment = rAppointment.findByPatient(patientId, request.getTime()).orElse(null);
+            Appointment appointment = rAppointment.findByPatient(patientId, request.getDate(), request.getHour()).orElse(null);
 
             if (appointment == null) {
                 return new AppResponse("Chưa hẹn lịch khám", false);
             }
 
-            Diagnosis diagnosis = rDiagnosis.findByAppointmentId(appointment.getId()).orElse(null);
+            List<Diagnosis> diagnosis = rDiagnosis.findByAppointmentId(appointment.getId());
 
             if (diagnosis == null) {
                 return new AppResponse("Hiện chưa có chẩn đoán", false);
@@ -62,5 +64,10 @@ public class DiagnosisServiceImpl implements DiagnosisService {
             System.err.println(e.getMessage());
             return new AppResponse("Đã xảy ra lỗi", false);
         }
+    }
+
+    @Override
+    public List<Diagnosis> getAllByAppointmentId(Integer id) {
+        return rDiagnosis.findByAppointmentId(id);
     }
 }

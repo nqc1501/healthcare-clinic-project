@@ -43,7 +43,6 @@ export class LoginComponent {
       ).subscribe({
         next: (res) => {
           console.log(res);
-          this.storage.saveJwtToken(res);
         },
         error: (err) => {
           console.log(err);

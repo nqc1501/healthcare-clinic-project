@@ -62,7 +62,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: dimgray;
+    background-color: rgb(128, 122, 122);
     font-size: 18px;
 }
 
@@ -72,7 +72,7 @@
 
 .toolbar div:hover,
 .toolbar div:active {
-    color: blue;
+    color: rgb(180, 180, 206);
 }
 
 ::ng-deep .button-menu {

@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 const TOKEN = 'c_token';
 const ID = 'c_id';
 const ROLE = 'c_role';
+const LOGGED_IN_KEY = 'loggedIn';
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +15,13 @@ export class StorageService {
     private sCookie: CookieService,
   ) { }
 
-  public hasToken() {
-    if (this.getJwtFromCookie() == '') {
-      return false;
-    }
-
-    if (this.getJwtFromCookie() === null) {
-      return false;
-    }
-
-    return true;
+  saveLoggedIn(loggedIn: boolean) {
+    localStorage.setItem(LOGGED_IN_KEY, loggedIn ? 'true' : 'false');
   }
 
-  public saveJwtToken(jwt: string) {
-    const expirationTime = 6 * 60 * 60 * 1000;
-    this.sCookie.set(TOKEN, jwt, expirationTime, '/', null, true, 'Strict');
+  isLoggedIn(): boolean {
+    const loggedIn = localStorage.getItem(LOGGED_IN_KEY);
+    return loggedIn === 'true';
   }
 
   public saveId(id: number) {
@@ -41,55 +34,15 @@ export class StorageService {
     window.localStorage.setItem(ROLE, JSON.stringify(role));
   }
 
-  public getJwtFromCookie() {
-    return this.sCookie.get(TOKEN);
+  public getUserId() {
+    return JSON.parse(localStorage.getItem(ID));
   }
 
   public getRole() {
     return JSON.parse(localStorage.getItem(ROLE));
   }
 
-  public getUserRole() {
-    const user = this.getRole();
-    if (user == null) {
-      return 'none';
-    }
-    return user.role;
-  }
-
-  public getUserId() {
-    return JSON.parse(localStorage.getItem(ID));
-  }
-
-  public isAdminLoggedIn() {
-    if (this.getJwtFromCookie() == '') {
-      return false;
-    }
-    
-    const role = this.getRole();
-    return role == 'ADMIN';
-  }
-
-  public isDoctorLoggedIn() {
-    if (this.getJwtFromCookie() == null) {
-      return false;
-    }
-
-    const role = this.getUserRole();
-    return role == 'DOCTOR';
-  }
-
-  public isPatientLoggedIn() {
-    if (this.getJwtFromCookie() == null) {
-      return false;
-    }
-
-    const role = this.getUserRole();
-    return role == 'PATIENT';
-  }
-
   public logout() {
-    this.sCookie.delete(TOKEN, '/', null, false, 'Strict');
     window.localStorage.removeItem(ID);
     window.localStorage.removeItem(ROLE);
   }

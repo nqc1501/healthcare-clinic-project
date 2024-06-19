@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/diagnosis")
 public class DiagnosisController {
 
     @Autowired
     DiagnosisService sDiagnosis;
 
-    @GetMapping("/patient/{patientId}/diagnosis")
-    public ResponseEntity<?> getDiagnosisByPatient(@PathVariable String patientId, @RequestBody AppointmentRequest request) {
+    @GetMapping
+    public ResponseEntity<?> getDiagnosisByPatient(@RequestParam String patientId, @RequestBody AppointmentRequest request) {
         return ResponseEntity.ok(sDiagnosis.getDiagnosisByPatientId(patientId, request));
     }
 
-    @PostMapping("/diagnosis")
+    @PostMapping
     public ResponseEntity<?> addDiagnosis(@RequestBody Diagnosis diagnosis) {
         return ResponseEntity.ok(sDiagnosis.addDiagnosis(diagnosis));
     }

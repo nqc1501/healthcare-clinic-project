@@ -28,8 +28,8 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 })
 export class ListMedicationComponent {
 
-  displayedColumns: string[] = ['position', 'name', 'quantity', 'unit', 'usage', 'edit', 'delete'];
-  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ['position', 'name', 'unit', 'composition', 'action'];
+  dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -40,11 +40,10 @@ export class ListMedicationComponent {
   ) { }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.getAllMedication();
   }
 
   applyFilter(event: Event) {
-
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -80,7 +79,7 @@ export class ListMedicationComponent {
   }
 
   openEditForm(data: any) {
-    const dialogRef = this.dialog.open(AddNewMedicationComponent, data);
+    const dialogRef = this.dialog.open(AddNewMedicationComponent, {data});
 
     dialogRef.afterClosed().subscribe({
       next: (res) => {
@@ -94,31 +93,19 @@ export class ListMedicationComponent {
     });
   }
 
-  openDeleteForm() {
+  openDeleteForm(id: number) {
     const result = window.confirm('Xóa bản ghi này ?');
     if (result) {
-      this.snackbar.open('Bản ghi đã được xóa thành công', 'OK', { duration: 3000 });
+      this.sItem.deleteMedication(id).subscribe({
+        next: (res) => {
+          this.getAllMedication();
+          this.snackbar.open('Bản ghi đã được xóa thành công', 'OK', { duration: 3000 });
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
     }
   }
 
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  quantity: number;
-  unit: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', quantity: 1.0079, unit: 'H'},
-  {position: 2, name: 'Helium', quantity: 4.0026, unit: 'He'},
-  {position: 3, name: 'Lithium', quantity: 6.941, unit: 'Li'},
-  {position: 4, name: 'Beryllium', quantity: 9.0122, unit: 'Be'},
-  {position: 5, name: 'Boron', quantity: 10.811, unit: 'B'},
-  {position: 6, name: 'Carbon', quantity: 12.0107, unit: 'C'},
-  {position: 7, name: 'Nitrogen', quantity: 14.0067, unit: 'N'},
-  {position: 8, name: 'Oxygen', quantity: 15.9994, unit: 'O'},
-  {position: 9, name: 'Fluorine', quantity: 18.9984, unit: 'F'},
-  {position: 10, name: 'Neon', quantity: 20.1797, unit: 'Ne'},
-];

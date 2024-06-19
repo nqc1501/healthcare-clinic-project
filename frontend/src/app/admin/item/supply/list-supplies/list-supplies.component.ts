@@ -9,6 +9,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { AddNewSupplyComponent } from '../add-new-supply/add-new-supply.component';
 import { ItemService } from '../../../../services/item/item.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { error } from 'console';
 
 @Component({
   selector: 'app-list-supplies',
@@ -40,7 +41,7 @@ export class ListSuppliesComponent {
   //   'length',
   //   'width'
   // ];
-  displayedColumns: string[] = ['position', 'name', 'quantity', 'unit', 'length', 'width', 'edit', 'delete'];
+  displayedColumns: string[] = ['position', 'name', 'unit', 'length', 'width', 'action'];
   dataSource = new MatTableDataSource<any>;
 
   listAllSupplies: any[] = [];
@@ -52,31 +53,12 @@ export class ListSuppliesComponent {
   ) { }
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.getAllSupplies();
   }
 
-  getAllSupplies() {
-    const listSupplies: {
-      id: number, 
-      name: string, 
-      quantity: number, 
-      unit: string, 
-      length: number, 
-      width: number
-    }[] = [];
-    
+  getAllSupplies() {    
     this.sItem.findAllSupplies().subscribe({
       next: (res) => {
-        // for (const r of res) {
-        //   listSupplies.push({
-        //     id: r.id,
-        //     name: r.name,
-        //     quantity: r.quantity,
-        //     unit: r.unit,
-        //     length: r.length,
-        //     width: r.width
-        //   });
-        // }
         this.dataSource = new MatTableDataSource(res);
       }, 
       error: (err) => {
@@ -107,31 +89,19 @@ export class ListSuppliesComponent {
     });
   }
 
-  openDeleteForm() {
+  openDeleteForm(id: number) {
     const result = window.confirm('Xóa bản ghi này ?');
     if (result) {
-      this.snackbar.open('Bản ghi đã được xóa thành công', 'OK', { duration: 3000 });
+      this.sItem.deleteSupply(id).subscribe({
+        next: (res) => {
+          this.getAllSupplies();
+          this.snackbar.open('Bản ghi đã được xóa thành công', 'OK', { duration: 3000 });
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
     }
   }
 
 }
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  quantity: number;
-  unit: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', quantity: 1.0079, unit: 'H'},
-  {position: 2, name: 'Helium', quantity: 4.0026, unit: 'He'},
-  {position: 3, name: 'Lithium', quantity: 6.941, unit: 'Li'},
-  {position: 4, name: 'Beryllium', quantity: 9.0122, unit: 'Be'},
-  {position: 5, name: 'Boron', quantity: 10.811, unit: 'B'},
-  {position: 6, name: 'Carbon', quantity: 12.0107, unit: 'C'},
-  {position: 7, name: 'Nitrogen', quantity: 14.0067, unit: 'N'},
-  {position: 8, name: 'Oxygen', quantity: 15.9994, unit: 'O'},
-  {position: 9, name: 'Fluorine', quantity: 18.9984, unit: 'F'},
-  {position: 10, name: 'Neon', quantity: 20.1797, unit: 'Ne'},
-];

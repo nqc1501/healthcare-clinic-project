@@ -9,7 +9,11 @@ public interface PatientService {
 
     List<Patient> getAllPatient();
 
+    List<Patient> getByStatus(String status);
+
     Patient getById(String id);
+
+    Patient getByHealthCode(String healthCode);
 
     AppResponse addPatient(Patient patient);
 

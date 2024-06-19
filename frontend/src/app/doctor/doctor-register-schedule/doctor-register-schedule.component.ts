@@ -11,6 +11,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { StorageService } from '../../auth/services/storage/storage.service';
 import { ShiftService } from '../../services/shift/shift.service';
 import { DoctorService } from '../../services/doctor/doctor.service';
+import { ScheduleService } from '../../services/schedule/schedule.service';
 
 @Component({
   selector: 'app-doctor-register-schedule',
@@ -71,6 +72,7 @@ export class DoctorRegisterScheduleComponent {
 
   constructor(
     private sShift: ShiftService,
+    private sSchedule: ScheduleService,
     private sDoctor: DoctorService,
     private sStorage: StorageService,
     private fb: FormBuilder
@@ -126,9 +128,9 @@ export class DoctorRegisterScheduleComponent {
   }
 
   registerShift() {
-    this.sShift.registerByUser(this.initDataToReg()).subscribe({
+    this.sShift.registerByUser(1, this.initDataToReg()).subscribe({
       next: (res) => {
-        this.sDoctor.registerShift(res.data).subscribe({
+        this.sDoctor.registerShift('', res.data).subscribe({
           next: (r) => {
             this.getAllShift();
             this.getShiftByUser();
@@ -173,7 +175,7 @@ export class DoctorRegisterScheduleComponent {
   }
 
   private getShiftByUser() {
-    this.sShift.getAllShiftByUser(this.userId).subscribe({
+    this.sSchedule.getAllByDoctor(this.userId).subscribe({
       next: (res) => {
         const list: any[] = [];
         for (let r of res) {

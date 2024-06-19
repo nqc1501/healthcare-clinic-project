@@ -25,6 +25,14 @@
                 <mat-header-row *matHeaderRowDef="symptomColumns"></mat-header-row>
                 <mat-row *matRowDef="let row; columns: symptomColumns;"></mat-row>
             </mat-table>
+
+            <mat-toolbar>
+                <mat-toolbar-row class="center-cell">
+                    <button mat-icon-button (click)="openAddForm()">
+                        <mat-icon>add_circle_outline</mat-icon>
+                    </button>
+                </mat-toolbar-row>
+            </mat-toolbar>
         </div>
 
         <div class="table-container mat-elevation-z8">

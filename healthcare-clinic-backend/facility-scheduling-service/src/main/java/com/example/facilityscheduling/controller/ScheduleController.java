@@ -1,12 +1,11 @@
 package com.example.facilityscheduling.controller;
 
-import com.example.facilityscheduling.model.Schedule;
+import com.example.facilityscheduling.payload.req.ScheduleRequest;
 import com.example.facilityscheduling.service.ScheduleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -16,8 +15,18 @@ public class ScheduleController {
     @Autowired
     ScheduleService sSchedule;
 
-    @PostMapping("/add-room")
-    public ResponseEntity<?> addRoomToSchedule(@RequestBody Schedule schedule) {
-        return ResponseEntity.ok(sSchedule.addRoom(schedule));
+    @GetMapping("/specialty/{specialtyId}/schedule-registry")
+    public ResponseEntity<?> getAllScheduleBySpecialtyId(@Valid @PathVariable Integer specialtyId) {
+        return ResponseEntity.ok(sSchedule.getBySpecialtyId(specialtyId));
+    }
+
+    @GetMapping("/doctor")
+    public ResponseEntity<?> getAllByDoctor(@RequestParam String doctorId) {
+        return ResponseEntity.ok(sSchedule.getAllByDoctorId(doctorId));
+    }
+
+    @PostMapping("/{id}/add-room")
+    public ResponseEntity<?> addRoomToSchedule(@PathVariable Integer id, @RequestBody ScheduleRequest request) {
+        return ResponseEntity.ok(sSchedule.addRoom(id, request));
     }
 }

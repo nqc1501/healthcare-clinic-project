@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { StorageService } from '../../auth/services/storage/storage.service';
+import { ScheduleService } from '../../services/schedule/schedule.service';
 
 @Component({
   selector: 'app-doctor-schedule',
@@ -45,6 +46,7 @@ export class DoctorScheduleComponent {
 
   constructor(
     private sShift: ShiftService,
+    private sSchedule: ScheduleService,
     private sStorage: StorageService,
     private fb: FormBuilder
   ) {
@@ -89,7 +91,7 @@ export class DoctorScheduleComponent {
   }
 
   private getAllShift() {
-    this.sShift.getAllShiftByUser(this.sStorage.getUserId()).subscribe({
+    this.sSchedule.getAllByDoctor(this.sStorage.getUserId()).subscribe({
       next: (res) => {
         for (let r of res) {
           const shift = {

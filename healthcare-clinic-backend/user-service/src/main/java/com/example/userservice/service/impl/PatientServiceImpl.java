@@ -6,8 +6,10 @@ import com.example.userservice.repository.PatientRepository;
 import com.example.userservice.service.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -21,13 +23,35 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public List<Patient> getByStatus(String status) {
+        return rPatient.findByStatus(status);
+    }
+
+    @Override
     public Patient getById(String id) {
         return rPatient.findById(id).orElse(null);
     }
 
     @Override
+    public Patient getByHealthCode(String healthCode) {
+        return rPatient.findByHealthInsuranceCode(healthCode);
+    }
+
+    @Override
     public AppResponse addPatient(Patient patient) {
-        return null;
+        try {
+
+            if (ObjectUtils.isEmpty(patient.getName())) {
+                return new AppResponse("Không được để trống tên", false);
+            }
+
+            patient.setId(generateId());
+            return new AppResponse(rPatient.save(patient));
+
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return new AppResponse("Đã xảy ra lỗi", false);
+        }
     }
 
     @Override
@@ -64,5 +88,10 @@ public class PatientServiceImpl implements PatientService {
             System.err.println(e.getMessage());
             return new AppResponse("Đã xảy ra lỗi", false);
         }
+    }
+
+    private String generateId() {
+        String randomUUID = UUID.randomUUID().toString();
+        return "BN" + randomUUID.substring(0, 8);
     }
 }

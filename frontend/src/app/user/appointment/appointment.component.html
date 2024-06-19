@@ -1,0 +1,105 @@
+<div *ngIf="!isBooked" class="container">
+    <h2> Đặt lịch thăm khám </h2>
+
+    <form [formGroup]="appointmentForm" (ngSubmit)="onFormSubmit()">
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label> Họ và tên </mat-label>
+                <input matInput type="text" formControlName="name">
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-label> Ngày sinh </mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="birthday">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+    
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label> Số điện thoại </mat-label>
+                <input matInput type="text" formControlName="tel">
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-label> Email </mat-label>
+                <input matInput type="text" formControlName="email">
+            </mat-form-field>
+        </div>
+    
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label> Giới tính </mat-label>
+                <mat-select formControlName="gender">
+                    <mat-option value="male"> Nam </mat-option>
+                    <mat-option value="female"> Nữ </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label> Mã BHYT </mat-label>
+                <input matInput type="text" formControlName="healthInsuranceCode">
+            </mat-form-field>
+        </div>
+
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label> Địa chỉ </mat-label>
+                <input matInput type="text" formControlName="address">
+            </mat-form-field>
+        </div>
+    
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label> Chuyên khoa</mat-label>
+                <mat-select (selectionChange)="selectionSpecialty($event.value)" formControlName="specialty">
+                    <mat-option *ngFor="let specialty of listSpecialty" [value]="specialty">
+                        {{specialty.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+    
+            <mat-form-field appearance="outline">
+                <mat-label> Bác sĩ </mat-label>
+                <mat-select formControlName="doctor">
+                    <mat-option *ngFor="let doctor of listDoctor" [value]="doctor">
+                        {{doctor.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+        <div class="row">
+            <mat-form-field appearance="outline">
+                <mat-label> Ngày khám </mat-label>
+                <input matInput [matDatepicker]="bdPicker" [min]="minDate" [max]="maxDate" formControlName="date">
+                <mat-datepicker-toggle matIconSuffix [for]="bdPicker"></mat-datepicker-toggle>
+                <mat-datepicker #bdPicker></mat-datepicker>
+            </mat-form-field>
+        
+            <mat-form-field appearance="outline">
+                <mat-label> Giờ khám </mat-label>
+                <mat-select formControlName="hour">
+                    <mat-option *ngFor="let hour of listHour" [value]="hour">
+                        {{hour}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+        <div class="text-container">
+            <mat-form-field appearance="outline">
+                <mat-label> Nội dung yêu cầu... </mat-label>
+                <textarea matInput type="text" formControlName="description"></textarea>
+            </mat-form-field>
+        </div>
+
+        <button mat-raised-button color="primary" type="submit"> Đặt lịch </button>
+    </form>
+</div>
+
+<div *ngIf="isBooked" class="container">
+    <h1> Bạn đã đặt lịch thành công </h1>
+    <h1> Hãy theo dõi email của bạn để biết thêm thông tin chi tiết. </h1>
+</div>

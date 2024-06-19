@@ -27,12 +27,12 @@ public class RoomController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addRoom(@RequestBody Room room) {
+    public ResponseEntity<?> addRoom(@ModelAttribute Room room) {
         return ResponseEntity.ok(sRoom.addRoom(room));
     }
 
     @PutMapping
-    public ResponseEntity<?> updateRoom(@RequestBody Room room) {
+    public ResponseEntity<?> updateRoom(@ModelAttribute Room room) {
         return ResponseEntity.ok(sRoom.updateRoom(room));
     }
 

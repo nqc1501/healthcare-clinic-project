@@ -43,9 +43,10 @@ export class HeaderComponent {
     this.toggleSideBarForMe.emit();
   }
 
-  logOut() {
-    this.sStorage.logout();
+  logout() {
     this.sAuth.signOut();
+    this.sAuth.logout();
+    this.sStorage.logout();
     this.router.navigateByUrl('/admin/login');
   }
 

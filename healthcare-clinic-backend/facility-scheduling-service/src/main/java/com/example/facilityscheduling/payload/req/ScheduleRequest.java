@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 public class ScheduleRequest {
 
     private String doctorId;
+    private Integer roomId;
 }

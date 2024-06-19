@@ -1,6 +1,7 @@
 package com.example.healthcareservice.controller;
 
 import com.example.healthcareservice.model.item.Medication;
+import com.example.healthcareservice.model.item.Supply;
 import com.example.healthcareservice.service.MedicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,15 @@ public class MedicationController {
     @PostMapping
     public ResponseEntity<?> addMedication(@RequestBody Medication medication) {
         return ResponseEntity.ok(sMedication.addMedication(medication));
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateSupply(@RequestBody Medication medication) {
+        return ResponseEntity.ok(sMedication.updateMedication(medication));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteSupply(@PathVariable Integer id) {
+        return ResponseEntity.ok(sMedication.deleteMedication(id));
     }
 }

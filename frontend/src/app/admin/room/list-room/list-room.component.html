@@ -1,5 +1,5 @@
 <div class="container">
-    <mat-form-field>
+    <mat-form-field style="width: 350px;" appearance="outline">
         <mat-label> Search </mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
     </mat-form-field>
@@ -7,17 +7,17 @@
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef> STT </th>
-                <td mat-cell *matCellDef="let i = index"> {{ i + 1 }} </td>
+                <td mat-cell *matCellDef="let i = index"> {{i + 1}} </td>
             </ng-container>
     
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Số Phòng </th>
-                <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
     
             <ng-container matColumnDef="function">
                 <th mat-header-cell *matHeaderCellDef> Chức Năng </th>
-                <td mat-cell *matCellDef="let element"> {{ element.functionName }} </td>
+                <td mat-cell *matCellDef="let element"> {{element.function}} </td>
             </ng-container>
     
             <ng-container matColumnDef="action">
@@ -26,7 +26,7 @@
                     <button mat-icon-button color="primary" (click)="openEditForm(element)">
                         <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button color="warn" (click)="openDeleteForm()">
+                    <button mat-icon-button color="warn" (click)="openDeleteForm(element.id)">
                         <mat-icon>delete</mat-icon>
                     </button>
                 </td>
@@ -36,7 +36,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     
             <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4"> Không tìm thấy từ khóa "{{ input.value }}" </td>
+                <td class="mat-cell" colspan="4"> Không tìm thấy từ khóa "{{input.value}}" </td>
             </tr>
         </table>
     

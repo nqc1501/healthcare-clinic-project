@@ -14,7 +14,7 @@ public class PrescriptionController {
     @Autowired
     PrescriptionService sPrescription;
 
-    @GetMapping("/{diagnosisId}")
+    @GetMapping("/find-by-diagnosis/{diagnosisId}")
     public ResponseEntity<?> getByDiagnosisId(@PathVariable Integer diagnosisId) {
         return ResponseEntity.ok(sPrescription.getByDiagnosisId(diagnosisId));
     }

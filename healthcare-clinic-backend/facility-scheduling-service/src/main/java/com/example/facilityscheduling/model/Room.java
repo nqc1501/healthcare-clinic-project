@@ -1,5 +1,6 @@
 package com.example.facilityscheduling.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +16,10 @@ public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @ManyToOne
-    @JoinColumn(name = "floor_id", referencedColumnName = "id")
-    private Floor floor;
+    @Column(name = "floor_id", nullable = false)
+    private Integer floorId;
     @Column(unique = true)
     private String name;
-    private String functionName;
+    @Column(name = "function_name") 
+    private String function;
 }

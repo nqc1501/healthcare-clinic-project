@@ -9,5 +9,5 @@ public interface SymptomService {
 
     List<Symptom> getByPatientId(String patientId);
 
-    AppResponse addSymptom(Symptom symptom);
+    AppResponse addSymptom(String patientId, List<Symptom> listSymptom);
 }

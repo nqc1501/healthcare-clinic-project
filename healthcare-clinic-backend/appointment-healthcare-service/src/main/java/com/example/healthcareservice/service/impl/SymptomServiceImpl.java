@@ -22,19 +22,15 @@ public class SymptomServiceImpl implements SymptomService {
     }
 
     @Override
-    public AppResponse addSymptom(Symptom symptom) {
+    public AppResponse addSymptom(String patientId, List<Symptom> listSymptom) {
         try {
-            if (ObjectUtils.isEmpty(symptom)) {
-                return new AppResponse("Không được để trống", false);
+
+            for (Symptom s : listSymptom) {
+                s.setPatientId(patientId);
+                rSymptom.save(s);
             }
 
-            if (ObjectUtils.isEmpty(symptom.getPatientId())) {
-                return new AppResponse("Mã người dùng không được để trống", false);
-            }
-
-            rSymptom.save(symptom);
-
-            return new AppResponse("Thêm triệu chứng cho người dùng " + symptom.getPatientId() + " thành công", true);
+            return new AppResponse("Thêm triệu chứng cho người dùng thành công", true);
 
         } catch (Exception e) {
             System.err.println(e.getMessage());

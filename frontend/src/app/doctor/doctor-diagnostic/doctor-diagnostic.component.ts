@@ -18,6 +18,9 @@ import { DianosticService } from '../../services/diagnostic/dianostic.service';
 import { PrescriptionService } from '../../services/prescription/prescription.service';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SymptomDialogComponent } from '../dialog/symptom-dialog/symptom-dialog.component';
+import { SymptomService } from '../../services/symptom/symptom.service';
 
 @Component({
   selector: 'app-doctor-diagnostic',
@@ -32,7 +35,9 @@ import jsPDF from 'jspdf';
     MatButtonModule,
     MatIconModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    MatToolbarModule,
+    MatDialogModule,
   ],
   templateUrl: './doctor-diagnostic.component.html',
   styleUrl: './doctor-diagnostic.component.css'
@@ -49,7 +54,7 @@ export class DoctorDiagnosticComponent {
   control = new FormControl();
 
   symptomColumns: string[] = ['position', 'name'];
-  symptomData = new MatTableDataSource<any>(Symptom);
+  symptomData = new MatTableDataSource<any>();
 
   testColumns: string[] = ['position', 'name', 'result'];
   testData = new MatTableDataSource<any>(Test);
@@ -77,6 +82,7 @@ export class DoctorDiagnosticComponent {
     private sMed: ItemService,
     private sDia: DianosticService,
     private sPre: PrescriptionService,
+    private sSym: SymptomService,
     private fb: FormBuilder,
     private dialog: MatDialog,
   ) { }
@@ -86,7 +92,11 @@ export class DoctorDiagnosticComponent {
     if (!this.patient) {
       const id = this.route.snapshot.paramMap.get('id');
       // this.patient = DATA[0];
+      console.log(id);
       this.getPatientById(id);
+      this.getSymtomByPatient(id);
+    } else {
+      this.getSymtomByPatient(this.patient.id);
     }
 
     this.diagnostic = this.fb.group({
@@ -131,6 +141,18 @@ export class DoctorDiagnosticComponent {
     });
   }
 
+  getSymtomByPatient(id: string) {
+    this.sSym.getSymptomByPatient(id).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.symptomData = new MatTableDataSource(res);
+      }, 
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
   expandTest(data: any) {
     const dialogRef = this.dialog.open(DoctorTestResultComponent, {data});
   }
@@ -164,6 +186,18 @@ export class DoctorDiagnosticComponent {
 
   private changeToMedic(obj: any) {
     return {id: obj.id, name: obj.name, quantity: 0, unit: obj.unit, dosage: '', note: ''};
+  }
+
+  openAddForm() {
+    const data = this.route.snapshot.paramMap.get('id');
+    const dialogRef = this.dialog.open(SymptomDialogComponent, {data});
+    dialogRef.afterClosed().subscribe({
+      next: (res) => {
+        if (res) {
+          this.getSymtomByPatient(data);
+        }
+      }
+    });
   }
 
   printPrescription() {
@@ -243,18 +277,4 @@ const Symptom = [
 
 const Test = [
   {id: 1, name: 'Xét nghiệm máu', result: 'Tiểu cầu giảm mạnh'}
-];
-
-const Medication = [
-  {id: 1, name: 'Esaphe', unit: 'Viên'},
-  {id: 2, name: 'QA Alipro', unit: 'Viên'},
-  {id: 3, name: 'PROHEPATIS', unit: 'Viên'},
-];
-
-const DATA: Patient[] = [
-  {id: 'BN01', name: 'John', age: 24, birthday: '1/2/2000', gender: 'Male' ,healthInsuranceCode: '0321912141', status: 'Đang chờ khám'},
-  {id: 'BN02', name: 'Tony', age: 27, birthday: '4/5/1997', gender: 'Male', healthInsuranceCode: '7873183712', status: 'Đang chờ khám'},
-  {id: 'BN03', name: 'Mary', age: 44, birthday: '15/1/1980', gender: 'Female', healthInsuranceCode: '511415141', status: 'Đang chờ khám'},
-  {id: 'BN04', name: 'Syrson', age: 21, birthday: '2/8/2003', gender: 'Male', healthInsuranceCode: '9032163913', status: 'Đang chờ khám'},
-  {id: 'BN05', name: 'Niko', age: 28, birthday: '17/12/1996', gender: 'Male', healthInsuranceCode: 'i7382193179', status: 'Đang chờ khám'},
 ];

@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PatientService } from '../../services/patient/patient.service';
 
 @Component({
@@ -29,16 +29,23 @@ export class DoctorListPatientComponent {
   
   constructor(
     private sPat: PatientService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
-    // this.dataSource = new MatTableDataSource(DATA);
-    this.getAllPatient();
+    this.route.paramMap.subscribe(params => {
+      const status = params.get('status');
+      if (status === 'appointment-waiting') {
+        this.getPatientByStatus('Đang chờ');
+      } else {
+        this.getPatientByStatus('Đã khám');
+      }
+    });
   }
 
-  getAllPatient() {
-    this.sPat.getAllPatient().subscribe({
+  getPatientByStatus(status: string) {
+    this.sPat.getAllByStatus(status).subscribe({
       next: (res) => {
         this.dataSource = new MatTableDataSource(res);
       }

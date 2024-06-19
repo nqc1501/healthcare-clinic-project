@@ -11,6 +11,8 @@ import { MatTreeModule } from '@angular/material/tree';
 import { Router, RouterOutlet } from '@angular/router';
 import { BehaviorSubject, Observable, merge } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { DoctorService } from '../../../services/doctor/doctor.service';
+import { StorageService } from '../../../auth/services/storage/storage.service';
 
 export class DynamicFlatNode {
 
@@ -26,13 +28,15 @@ export class DynamicFlatNode {
 export class DynamicDatabase {
   dataMap = new Map<string, string[]>([
     ['Công việc', ['Đăng ký lịch làm việc', 'Lịch làm việc']],
+    ['Danh sách bệnh nhân', ['Bệnh nhân hẹn khám', 'Bệnh nhân đã khám']],
   ]);
 
   linkMap = new Map<string, string>([
     ['Trang chủ', '/doctor/dashboard'],
     ['Đăng ký lịch làm việc', '/doctor/register-schedule'],
     ['Lịch làm việc', '/doctor/work-schedule'],
-    ['Danh sách bệnh nhân', '/doctor/list-patient'],
+    ['Bệnh nhân hẹn khám', '/doctor/list-patient/appointment-waiting'],
+    ['Bệnh nhân đã khám', '/doctor/list-patient/completed'],
   ]);
 
   rootLevelNodes: string[] = [
@@ -169,9 +173,17 @@ export class SidebarComponent {
 
   hasChild = (_: number, _noData: DynamicFlatNode) => _noData.expandable;
 
+  doctor: any;
+
+  imageUrl: string;
+
+  doctorName: string;
+
   constructor(
     database: DynamicDatabase,
-    private router: Router
+    private router: Router,
+    private sDoctor: DoctorService,
+    private sStorage: StorageService,
   ) {
     this.treeControl = new FlatTreeControl<DynamicFlatNode>(this.getLevel, this.isExpandable);
     this.dataSource = new DynamicDataSource(this.treeControl, database);
@@ -180,11 +192,23 @@ export class SidebarComponent {
   }
 
   ngOnInit() {
-
+    const id = this.sStorage.getUserId();
+    this.getDoctorById(id);
   }
 
   nodeClicked(node: DynamicFlatNode) {
     this.router.navigateByUrl(node.link);
+  }
+
+  getDoctorById(id: string) {
+    this.sDoctor.getById(id).subscribe({
+      next: (res) => {
+        this.doctor = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
   }
 
 }

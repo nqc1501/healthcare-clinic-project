@@ -9,7 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Subject } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddNewRoomComponent } from '../add-new-room/add-new-room.component';
-import { SpecialistService } from '../../../services/specialist/specialist.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Injectable()
@@ -65,9 +64,6 @@ export class ListRoomComponent implements AfterViewInit {
     private snackbar: MatSnackBar
   ) { }
 
-  ngOnInit() {
-  }
-
   ngAfterViewInit() {
     this.getAllRooms();
   }
@@ -85,7 +81,6 @@ export class ListRoomComponent implements AfterViewInit {
   getAllRooms() {
     this.sRoom.getAllRooms().subscribe({
       next: (res) => {
-        console.log(res);
         this.dataSource = new MatTableDataSource(res);
         this.dataSource.paginator = this.paginator;
       },
@@ -117,10 +112,18 @@ export class ListRoomComponent implements AfterViewInit {
     });
   }
 
-  openDeleteForm() {
+  openDeleteForm(id: number) {
     const result = window.confirm('Xóa bản ghi này ?');
     if (result) {
-      this.snackbar.open('Bản ghi đã được xóa thành công', 'OK', { duration: 3000 });
+      this.sRoom.deleteRoom(id).subscribe({
+        next: (res) => {
+          this.getAllRooms();
+          this.snackbar.open('Bản ghi đã được xóa thành công', 'OK', {duration: 3000});
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      });
     }
   }
 

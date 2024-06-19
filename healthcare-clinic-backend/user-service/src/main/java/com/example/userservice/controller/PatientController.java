@@ -17,13 +17,28 @@ public class PatientController {
     PatientService sPatient;
 
     @GetMapping
-    public ResponseEntity<List<Patient>> getAllPatient() {
+    public ResponseEntity<?> getAllPatient() {
         return ResponseEntity.ok(sPatient.getAllPatient());
+    }
+
+    @GetMapping("/by-status/{status}")
+    public ResponseEntity<?> getAllPatientByStatus(@PathVariable String status) {
+        return ResponseEntity.ok(sPatient.getByStatus(status));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Patient> getById(@PathVariable String id) {
         return ResponseEntity.ok(sPatient.getById(id));
+    }
+
+    @GetMapping("/by-health-code/{healthCode}")
+    public ResponseEntity<?> getByHealthCode(@PathVariable String healthCode) {
+        return ResponseEntity.ok(sPatient.getByHealthCode(healthCode));
+    }
+
+    @PostMapping
+    public ResponseEntity<?> addPatient(@RequestBody Patient patient) {
+        return ResponseEntity.ok(sPatient.addPatient(patient));
     }
 
     @PutMapping
