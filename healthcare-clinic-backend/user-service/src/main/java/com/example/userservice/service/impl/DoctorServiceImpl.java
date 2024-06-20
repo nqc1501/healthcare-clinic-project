@@ -40,6 +40,7 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public AppResponse addDoctor(Doctor doctor) {
         try {
+            doctor.setId(generateId());
             rDoctor.save(doctor);
             return new AppResponse("Tạo mới bác sĩ thành công", true);
 
@@ -113,5 +114,10 @@ public class DoctorServiceImpl implements DoctorService {
             System.err.println(e.getMessage());
             return new AppResponse("Đã xảy ra lỗi", false);
         }
+    }
+
+    private String generateId() {
+        String randomUUID = UUID.randomUUID().toString();
+        return "DR" + randomUUID.substring(0, 8);
     }
 }
