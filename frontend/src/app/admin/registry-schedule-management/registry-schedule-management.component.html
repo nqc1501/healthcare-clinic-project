@@ -1,0 +1,94 @@
+<div class="container">
+    <mat-form-field appearance="outline">
+        <mat-label> Chuyên ngành </mat-label>
+        <mat-select (selectionChange)="selectionSpecialty($event.value)">
+            <mat-option *ngFor="let specialty of listSpecialty" [value]="specialty">
+                {{specialty.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef> Stt </mat-header-cell>
+                <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="startDate">
+                <mat-header-cell *matHeaderCellDef> Ngày bắt đầu </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{formatDate(element.shift.startDate)}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="endDate">
+                <mat-header-cell *matHeaderCellDef> Ngày kết thúc </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{formatDate(element.shift.endDate)}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="dayOfWeek">
+                <mat-header-cell *matHeaderCellDef> Ngày trong tuần </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.shift.dayOfWeek}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="startTime">
+                <mat-header-cell *matHeaderCellDef> Giờ bắt đầu </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.shift.startTime}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="endTime">
+                <mat-header-cell *matHeaderCellDef> Giờ kết thúc </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.shift.endTime}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="doctor">
+                <mat-header-cell *matHeaderCellDef> Bác sĩ đăng ký </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.doctor.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="room">
+                <mat-header-cell *matHeaderCellDef> Phòng </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.room ? element.room.name : 'Chưa có'}} </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns" (click)="onRowClick(row)" style="cursor: pointer;"></mat-row>
+        </mat-table>
+    </div>
+
+    <div class="room-registry" *ngIf="isSelected">
+        <table mat-table class="mat-elevation-z8" [dataSource]="roomData">
+
+            <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef> Stt </mat-header-cell>
+                <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Tên phòng </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="function">
+                <mat-header-cell *matHeaderCellDef> Chức năng </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.function}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="checkbox">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <section class="example-section">
+                        <mat-radio-group [(ngModel)]="element.isChecked" (change)="updateSchedule(element)">
+                            <mat-radio-button [value]="true" [disabled]="element.isChecked && isRegistered"></mat-radio-button>
+                        </mat-radio-group>
+                    </section>
+                </td>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="roomColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: roomColumns"></mat-row>
+        </table>
+
+        <button mat-raised-button color="primary" (click)="addRoomToSchedule()" class="save-button"> Lưu </button>
+    </div>
+</div>

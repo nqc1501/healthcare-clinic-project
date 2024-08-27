@@ -1,0 +1,25 @@
+<div mat-dialog-title>
+    <h1> Thêm triệu chứng </h1>
+</div>
+
+<div mat-dialog-content>
+    <form [formGroup]="symptomForm" (ngSubmit)="onFormSubmit()">
+        <div formArrayName="symptoms">
+            <div *ngFor="let symptom of symptoms.controls; let i = index" [formGroupName]="i">
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" formControlName="name">
+                    </mat-form-field>
+    
+                    <button mat-icon-button color="warn" (click)="removeSymptom(i)" *ngIf="symptoms.length > 1">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button mat-raised-button (click)="addSymptom()" color="warn"> Thêm </button>
+            <button mat-raised-button color="primary" type="submit"> Lưu </button>
+        </div>
+    </form>
+</div>

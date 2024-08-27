@@ -1,0 +1,15 @@
+.container {
+    padding: 20px;
+}
+
+.mat-column-position,
+.mat-column-start-date,
+.mat-column-end-date,
+.mat-column-day-of-week,
+.mat-column-start-time,
+.mat-column-end-time,
+.mat-column-quantity,
+.mat-column-quantity-registered,
+.mat-column-action {
+    text-align: center;
+}

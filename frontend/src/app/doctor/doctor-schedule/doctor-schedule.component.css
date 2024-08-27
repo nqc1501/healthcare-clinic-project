@@ -1,0 +1,22 @@
+.container {
+    padding: 20px;
+}
+
+.selected {
+    background-color: aquamarine;
+}
+
+.responsive-table {
+    border-collapse: collapse;
+}
+  
+.responsive-table th,
+.responsive-table td {
+    width: 100px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+mat-form-field {
+    width: 300px;
+}

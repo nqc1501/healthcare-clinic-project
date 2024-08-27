@@ -1,0 +1,17 @@
+.container {
+  padding: 20px;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+}
+
+.row {
+    display: flex;
+    flex-direction: column;
+  
+    & mat-form-field {
+      width: 250px;
+    }
+}

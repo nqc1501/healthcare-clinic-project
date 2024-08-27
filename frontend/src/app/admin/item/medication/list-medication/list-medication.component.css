@@ -1,0 +1,20 @@
+.container {
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+}
+  
+.mat-mdc-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+  
+td, th {
+    width: 25%;
+}
+
+.custom-button {
+    margin-top: 20px;
+}

@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="mat-elevation-z8">
+      <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- Position Column -->
+          <ng-container matColumnDef="position">
+            <mat-header-cell *matHeaderCellDef> STT </mat-header-cell>
+            <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Tên Thuốc </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="unit">
+            <mat-header-cell *matHeaderCellDef> Đơn Vị Tính </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.unit}} </mat-cell>
+          </ng-container>
+    
+          <ng-container matColumnDef="composition">
+            <mat-header-cell *matHeaderCellDef> Thành Phần </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.composition}} </mat-cell>
+          </ng-container>
+    
+          <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-icon-button color="primary" (click)="openEditForm(element)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="openDeleteForm(element.id)">
+                  <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+        </ng-container>
+        
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+    
+  <button mat-raised-button color="primary" class="custom-button" (click)="openAddForm()"> Thêm Thiết Bị </button>
+</div>

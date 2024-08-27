@@ -1,0 +1,68 @@
+<div mat-dialog-title>
+    <h1>{{ data ? 'Sửa thông tin' : 'Thêm mới thiết bị y tế' }}</h1>
+</div>
+<div>
+    <form [formGroup]="supplyForm" (ngSubmit)="onFormSubmit()">
+        <div mat-dialog-content>
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label> Tên Thiết Bị </mat-label>
+                    <input matInput type="text" formControlName="name">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label> Cách Dùng </mat-label>
+                    <input matInput type="text" formControlName="usageInstruction">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label> Đơn Vị Tính </mat-label>
+                    <input matInput type="text" formControlName="unit">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label> Đơn Giá </mat-label>
+                    <input matInput type="text" formControlName="price">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label> Hạn Sử Dụng </mat-label>
+                    <input matInput type="text" formControlName="expiryDate">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label> Ngày Sản Xuất </mat-label>
+                    <input matInput type="text" formControlName="manufacturingDate">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label> Độ Dài </mat-label>
+                    <input matInput type="text" formControlName="length">
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                    <mat-label> Độ Rộng </mat-label>
+                    <input matInput type="text" formControlName="width">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <mat-form-field appearance="outline">
+                    <mat-label> Mô Tả </mat-label>
+                    <textarea matInput type="text" formControlName="description"></textarea>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div mat-dialog-actions class="action">
+            <button mat-raised-button type="button" [mat-dialog-close]="false" color="accent"> Hủy </button>
+            <button mat-raised-button color="primary" type="submit"> Lưu </button>
+        </div>
+    </form>
+</div>

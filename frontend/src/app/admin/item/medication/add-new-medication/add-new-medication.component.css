@@ -1,0 +1,30 @@
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+  
+    & mat-form-field {
+      width: 100%;
+    }
+}
+
+.action {
+    padding: 0 25px 20px;
+  
+    & button {
+      flex: 1;
+    }
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  display: block;
+}

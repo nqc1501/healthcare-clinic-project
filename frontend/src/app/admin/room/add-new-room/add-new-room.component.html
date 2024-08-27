@@ -1,0 +1,42 @@
+<div mat-dialog-title>
+    <h1>{{ data ? 'Sửa thông tin' : 'Thêm phòng' }}</h1>
+</div>
+<div>
+    <form [formGroup]="roomForm" (ngSubmit)="onFormSubmit()">
+        <div mat-dialog-content>
+            <div class="column">
+                <div class="row">
+                    <mat-form-field appearance="outline">
+                        <mat-label> Số phòng </mat-label>
+                        <input matInput type="text" formControlName="name">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline">
+                        <mat-label> Tầng nhà </mat-label>
+                        <mat-select (selectionChange)="onSelectionChange()" formControlName="floor">
+                            <mat-option *ngFor="let floor of listFloor$ | async" [value]="floor">
+                                {{ floor.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="roomForm.get('floor').hasError('required')">
+                            Vui lòng chọn tầng nhà.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="outline">
+                    <mat-label> Chức năng </mat-label>
+                    <input matInput type="text" formControlName="function">
+                    <mat-error *ngIf="roomForm.get('function').hasError('required')">
+                        Vui lòng chọn chức năng.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div mat-dialog-actions class="action">
+            <button mat-raised-button type="button" [mat-dialog-close]="false" color="accent"> Hủy </button>
+            <button mat-raised-button color="primary" type="submit"> Lưu </button>
+        </div>
+    </form>
+</div>

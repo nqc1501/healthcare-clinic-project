@@ -1,0 +1,19 @@
+<div class="container">
+    <div mat-dialog-title class="title-container">
+        <h1>Đăng ký</h1>
+    </div>
+    <div mat-dialog-content>
+        <form [formGroup]="validateForm" (ngSubmit)="onFormSubmit()">
+            <div class="row">
+                <mat-form-field appearance="outline" class="form-field">
+                    <input matInput type="text" placeholder="Nhập email" formControlName="email">
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                    <input matInput type="text" placeholder="Nhập password" formControlName="password">
+                </mat-form-field>
+            </div>
+
+            <button mat-raised-button color="primary" type="submit"> Đăng ký </button>
+        </form>
+    </div>    
+</div>

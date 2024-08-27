@@ -1,0 +1,24 @@
+<div class="container">
+    <div mat-dialog-title class="title-container">
+        <h1>Đăng nhập</h1>
+    </div>
+    <div mat-dialog-content class="content-container">
+        <form [formGroup]="loginForm">
+            <div class="row">
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" placeholder="Nhập email" formControlName="email">
+                    <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Vui lòng nhập email.</mat-error>
+                    <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Vui lòng nhập email hợp lệ.</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Mật khẩu</mat-label>
+                    <input matInput type="text" placeholder="Nhập mật khẩu" formControlName="password">
+                    <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Vui lòng nhập mật khẩu.</mat-error>
+                </mat-form-field>
+            </div>
+        </form>
+    
+        <button mat-raised-button color="primary" (click)="login()">Đăng nhập</button>
+    </div>    
+</div>

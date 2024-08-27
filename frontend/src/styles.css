@@ -1,0 +1,18 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 16px;  
+}
+  
+.navbar-brand {
+    font-size: 20px;
+    font-weight: 600;
+    margin-right: 6px;
+}
+  
+.spacer {
+    flex: 1;
+}

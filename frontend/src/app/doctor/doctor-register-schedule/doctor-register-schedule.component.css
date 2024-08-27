@@ -1,0 +1,34 @@
+.container {
+    padding: 20px;
+}
+
+.mat-column-position,
+.mat-column-name,
+.mat-column-start-date,
+.mat-column-end-date,
+.mat-column-day-of-week,
+.mat-column-status,
+.mat-column-start-time,
+.mat-column-end-time,
+.mat-column-select {
+    text-align: center;
+}
+
+.selected {
+    background-color: aquamarine;
+}
+
+.responsive-table {
+    border-collapse: collapse;
+}
+  
+.responsive-table th,
+.responsive-table td {
+    width: 100px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.is-selected {
+    opacity: 0.5;
+}

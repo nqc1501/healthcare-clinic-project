@@ -1,0 +1,144 @@
+<div class="container">
+    <div class="mat-elevation-z8" #patientInfo>
+        <div class="patient-card">
+            <span><strong>Mã BHYT: </strong> {{patient.healthInsuranceCode}} </span>
+            <span><strong>Họ Tên: </strong> {{patient.name}} </span>
+            <span><strong>Tuổi: </strong> {{patient.age}} </span>
+            <span><strong>Ngày Sinh: </strong> {{formatDate(patient.birthday)}} </span>
+            <span><strong>Giới tính: </strong> {{patient.gender == "Male" ? "Nam" : "Nữ"}} </span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="table-container mat-elevation-z8">
+            <mat-table [dataSource]="symptomData" class="mat-elevation-z8">
+                <ng-container matColumnDef="position">
+                    <mat-header-cell *matHeaderCellDef> STT </mat-header-cell>
+                    <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+                </ng-container>
+                
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Tên Triệu Chứng </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="symptomColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: symptomColumns;"></mat-row>
+            </mat-table>
+
+            <mat-toolbar>
+                <mat-toolbar-row class="center-cell">
+                    <button mat-icon-button (click)="openAddForm()">
+                        <mat-icon>add_circle_outline</mat-icon>
+                    </button>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </div>
+
+        <div class="table-container mat-elevation-z8">
+            <mat-table [dataSource]="testData" class="mat-elevation-z8">
+                <ng-container matColumnDef="position">
+                    <mat-header-cell *matHeaderCellDef> STT </mat-header-cell>
+                    <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+                </ng-container>
+    
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef> Tên Xét Nghiệm </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="result">
+                    <mat-header-cell *matHeaderCellDef> Kết Quả </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.result}} </mat-cell>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="expand">
+                    <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                    <mat-cell *matCellDef="let element">
+                        <button mat-icon-button (click)="expandTest(element)">
+                            <mat-icon>more_horiz</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container> -->
+
+                <mat-header-row *matHeaderRowDef="testColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: testColumns;"></mat-row>
+            </mat-table>
+        </div>
+    </div>
+
+    <div [formGroup]="diagnostic" #diagnosticContainer>
+        <mat-form-field appearance="outline" class="diagnostic-container">
+            <mat-label> Chẩn đoán </mat-label>
+            <textarea matInput type="text" formControlName="conclusion"></textarea>
+        </mat-form-field>
+    </div>
+
+    <form>
+        <mat-form-field appearance="outline">
+            <mat-label> Tra Tên Thuốc </mat-label>
+            <input matInput type="text"
+                placeholder="Nhập tên thuốc"
+                [formControl]="control"
+                [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayMed" (optionSelected)="addMedication($event.option.value)">
+                @for (medic of filteredMedication | async; track medic) {
+                    <mat-option [value]="medic"> {{medic.name}} </mat-option>
+                }
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+
+    <div class="medication-container mat-elevation-z8" #medicationContainer>
+        <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef> STT </mat-header-cell>
+                <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Tên thuốc </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="quantity">
+                <mat-header-cell *matHeaderCellDef> Số lượng </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index">
+                    <mat-form-field appearance="outline">
+                        <input matInput type="number" placeholder="Số lượng" [(ngModel)]="dataSource.data[i].quantity">
+                    </mat-form-field>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="unit">
+                <mat-header-cell *matHeaderCellDef> Đơn vị tính </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.unit}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="dosage">
+                <mat-header-cell *matHeaderCellDef> Liểu dùng </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index">
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" placeholder="Liều dùng" [(ngModel)]="dataSource.data[i].dosage">
+                    </mat-form-field>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="note">
+                <mat-header-cell *matHeaderCellDef> Ghi chú </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index">
+                    <mat-form-field appearance="outline">
+                        <input matInput type="text" placeholder="Ghi chú" [(ngModel)]="dataSource.data[i].note">
+                    </mat-form-field>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </div>
+
+    <button mat-raised-button color="primary" (click)="printPrescription()">
+        Xuất Đơn Thuốc
+    </button>
+</div>
