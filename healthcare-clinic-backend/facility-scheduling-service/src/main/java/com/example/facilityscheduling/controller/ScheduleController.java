@@ -1,6 +1,6 @@
 package com.example.facilityscheduling.controller;
 
-import com.example.facilityscheduling.payload.req.ScheduleRequest;
+import com.example.facilityscheduling.dto.req.ScheduleRequest;
 import com.example.facilityscheduling.service.ScheduleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

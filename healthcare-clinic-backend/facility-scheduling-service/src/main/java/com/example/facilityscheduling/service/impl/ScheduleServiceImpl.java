@@ -1,8 +1,8 @@
 package com.example.facilityscheduling.service.impl;
 
 import com.example.facilityscheduling.model.Schedule;
-import com.example.facilityscheduling.payload.req.ScheduleRequest;
-import com.example.facilityscheduling.payload.res.DoctorResponse;
+import com.example.facilityscheduling.dto.req.ScheduleRequest;
+import com.example.facilityscheduling.dto.res.DoctorResponse;
 import com.example.facilityscheduling.repository.ScheduleRepository;
 import com.example.facilityscheduling.service.ScheduleService;
 import com.example.responsehandling.payload.response.AppResponse;
@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {

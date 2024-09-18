@@ -17,3 +17,11 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+app:
+  cookie-name: "JWT"
+
+jwt:
+  secretKey: "eDr/NgGRj2RRo1xRw6+EYfGUqbG424KYCgZ0vPIt/qWkfAgy8sl9dysxOaDyBmho"
+  valid-duration: 3600
+  refreshable-duration: 36000

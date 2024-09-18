@@ -1,7 +1,7 @@
 package com.example.healthcareservice.service;
 
 import com.example.healthcareservice.model.Diagnosis;
-import com.example.healthcareservice.payload.req.AppointmentRequest;
+import com.example.healthcareservice.dto.req.AppointmentRequest;
 import com.example.responsehandling.payload.response.AppResponse;
 
 import java.util.List;

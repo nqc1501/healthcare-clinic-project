@@ -1,7 +1,7 @@
 package com.example.facilityscheduling.service;
 
 import com.example.facilityscheduling.model.Schedule;
-import com.example.facilityscheduling.payload.req.ScheduleRequest;
+import com.example.facilityscheduling.dto.req.ScheduleRequest;
 import com.example.responsehandling.payload.response.AppResponse;
 
 import java.util.List;

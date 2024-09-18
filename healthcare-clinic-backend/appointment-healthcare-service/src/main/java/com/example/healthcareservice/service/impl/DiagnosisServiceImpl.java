@@ -2,7 +2,7 @@ package com.example.healthcareservice.service.impl;
 
 import com.example.healthcareservice.model.Appointment;
 import com.example.healthcareservice.model.Diagnosis;
-import com.example.healthcareservice.payload.req.AppointmentRequest;
+import com.example.healthcareservice.dto.req.AppointmentRequest;
 import com.example.healthcareservice.repository.AppointmentRepository;
 import com.example.healthcareservice.repository.DiagnosisRepository;
 import com.example.healthcareservice.service.DiagnosisService;

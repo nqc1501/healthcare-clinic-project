@@ -1,8 +1,8 @@
 package com.example.facilityscheduling.controller;
 
 import com.example.facilityscheduling.model.Shift;
-import com.example.facilityscheduling.payload.req.AppointmentRequest;
-import com.example.facilityscheduling.payload.req.ScheduleRequest;
+import com.example.facilityscheduling.dto.req.AppointmentRequest;
+import com.example.facilityscheduling.dto.req.ScheduleRequest;
 import com.example.facilityscheduling.service.ShiftService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

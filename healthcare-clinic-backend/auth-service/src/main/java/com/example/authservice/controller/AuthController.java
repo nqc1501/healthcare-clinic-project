@@ -1,14 +1,15 @@
 package com.example.authservice.controller;
 
-import com.example.authservice.payload.req.LoginRequest;
+import com.example.authservice.dto.req.LoginRequest;
 import com.example.authservice.service.CredentialService;
+import com.nimbusds.jose.JOSEException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
 
 @CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RestController
@@ -28,18 +29,19 @@ public class AuthController {
         return ResponseEntity.ok(sCredential.signIn(request, response));
     }
 
-    @GetMapping("/check-login")
-    public ResponseEntity<Boolean> checkLogin() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated()) {
-            return ResponseEntity.ok(true);
-        }
-
-        return ResponseEntity.ok(false);
+    @PostMapping("/check-login")
+    public ResponseEntity<Boolean> checkLogin(HttpServletRequest request) {
+        return ResponseEntity.ok(sCredential.checkLogin(request));
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response) {
-        return ResponseEntity.ok(sCredential.logout(response));
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) throws ParseException, JOSEException {
+        sCredential.logout(request, response);
+        return ResponseEntity.ok("Đăng xuất thành công");
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(HttpServletRequest request, HttpServletResponse response) throws ParseException, JOSEException {
+        return ResponseEntity.ok(sCredential.refresh(request, response));
     }
 }

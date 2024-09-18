@@ -1,7 +1,7 @@
 package com.example.healthcareservice.service.impl;
 
 import com.example.healthcareservice.model.item.Supply;
-import com.example.healthcareservice.payload.req.SupplyRequest;
+import com.example.healthcareservice.dto.req.SupplyRequest;
 import com.example.healthcareservice.repository.SupplyRepository;
 import com.example.healthcareservice.service.SupplyService;
 import com.example.responsehandling.payload.response.AppResponse;

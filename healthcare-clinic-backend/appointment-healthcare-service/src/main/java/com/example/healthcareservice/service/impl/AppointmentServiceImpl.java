@@ -1,8 +1,9 @@
 package com.example.healthcareservice.service.impl;
 
 import com.example.healthcareservice.model.Appointment;
-import com.example.healthcareservice.payload.res.PatientResponse;
+import com.example.healthcareservice.dto.res.PatientResponse;
 import com.example.healthcareservice.repository.AppointmentRepository;
+import com.example.healthcareservice.repository.httpclient.PatientClient;
 import com.example.healthcareservice.service.AppointmentService;
 import com.example.responsehandling.payload.response.AppResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     AppointmentRepository rAppointment;
 
     @Autowired
+    PatientClient patientClient;
+
+    @Autowired
     WebClient.Builder webClientBuilder;
 
     @Override
@@ -28,17 +32,15 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public List<Appointment> getByHealthCode(String healthCode) {
 
-        PatientResponse patient = webClientBuilder.build().get()
-                .uri("http://user-service/api/v1/patient/find-by-health-code/{healthCode}", healthCode)
-                .retrieve()
-                .bodyToFlux(PatientResponse.class)
-                .blockFirst();
+//        PatientResponse patient = webClientBuilder.build().get()
+//                .uri("http://user-service/api/v1/patient/by-health-code/{healthCode}", healthCode)
+//                .retrieve()
+//                .bodyToFlux(PatientResponse.class)
+//                .blockFirst();
 
-        if (patient != null) {
-            return rAppointment.findByPatientId(patient.getId());
-        }
+        PatientResponse patient = patientClient.getByHealthCode(healthCode);
 
-        return null;
+        return patient != null ? rAppointment.findByPatientId(patient.getId()) : null;
     }
 
     @Override

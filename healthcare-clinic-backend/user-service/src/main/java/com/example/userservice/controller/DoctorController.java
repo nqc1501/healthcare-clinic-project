@@ -1,7 +1,7 @@
 package com.example.userservice.controller;
 
 import com.example.userservice.model.Doctor;
-import com.example.userservice.payload.ScheduleRequest;
+import com.example.userservice.dto.ScheduleRequest;
 import com.example.userservice.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

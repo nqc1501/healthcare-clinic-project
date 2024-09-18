@@ -34,7 +34,7 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient getByHealthCode(String healthCode) {
-        return rPatient.findByHealthInsuranceCode(healthCode);
+        return rPatient.findByHealthInsuranceCode(healthCode).orElse(null);
     }
 
     @Override

@@ -3,24 +3,37 @@ package com.example.authservice.utils;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 import java.security.Key;
-import java.util.*;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
+@Slf4j
 @Component
 public class JwtUtils {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    private static final String SECRET_KEY = "ca91fe6ef2ec72c50e3cbc855c79226540a4c53722a67a9ebc7e58195a9e40ae";
+    private final String SECRET_KEY = "eDr/NgGRj2RRo1xRw6+EYfGUqbG424KYCgZ0vPIt/qWkfAgy8sl9dysxOaDyBmho";
+
+    @Value("${jwt.valid-duration}")
+    private Long VALID_DURATION;
+
+    @Value("$app.cookie-name")
+    private String COOKIE_NAME;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -36,15 +49,12 @@ public class JwtUtils {
     }
 
     public String generateToken(Map<String, Object> extractClaims, UserDetails userDetails) {
-        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-        List<String> roles = authorities.stream()
-                .map(GrantedAuthority::getAuthority).toList();
         return Jwts.builder()
                 .setClaims(extractClaims)
                 .setSubject(userDetails.getUsername())
-                .claim("roles", roles)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 12))
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
+                .setId(UUID.randomUUID().toString())
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -62,7 +72,7 @@ public class JwtUtils {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSignInKey())
                 .build()
@@ -83,22 +93,10 @@ public class JwtUtils {
         return extractAllClaims(token).getExpiration();
     }
 
-    public String parseJwt(HttpServletRequest request) {
-        String headerAuth = request.getHeader("Authorization");
-
-        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer ")) {
-            return headerAuth.substring(7);
-        }
-
-        return null;
-    }
-
-    public boolean validateJwt(String authToken) {
+    public boolean verifyToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(authToken);
+            Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token);
             return true;
-        } catch (SignatureException e) {
-            logger.error("Invalid JWT signature: {}", e.getMessage());
         } catch (MalformedJwtException e) {
             logger.error("Invalid JWT token: {}", e.getMessage());
         } catch (ExpiredJwtException e) {
@@ -110,5 +108,21 @@ public class JwtUtils {
         }
 
         return false;
+    }
+
+    public String getJwtFromCookies(HttpServletRequest request) {
+        return getCookieValueByName(request, COOKIE_NAME);
+    }
+
+    private String getCookieValueByName(HttpServletRequest request, String name) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("JWT".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
 }

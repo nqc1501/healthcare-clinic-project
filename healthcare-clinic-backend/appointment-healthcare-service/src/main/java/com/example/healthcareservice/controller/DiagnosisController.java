@@ -1,7 +1,7 @@
 package com.example.healthcareservice.controller;
 
 import com.example.healthcareservice.model.Diagnosis;
-import com.example.healthcareservice.payload.req.AppointmentRequest;
+import com.example.healthcareservice.dto.req.AppointmentRequest;
 import com.example.healthcareservice.service.DiagnosisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -3,7 +3,7 @@ package com.example.userservice.service.impl;
 import com.example.responsehandling.payload.response.AppResponse;
 import com.example.userservice.model.Doctor;
 import com.example.userservice.model.Schedule;
-import com.example.userservice.payload.ScheduleRequest;
+import com.example.userservice.dto.ScheduleRequest;
 import com.example.userservice.repository.DoctorRepository;
 import com.example.userservice.repository.ScheduleRepository;
 import com.example.userservice.service.DoctorService;

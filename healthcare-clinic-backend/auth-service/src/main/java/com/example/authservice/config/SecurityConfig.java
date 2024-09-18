@@ -17,6 +17,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final String[] PUBLIC_ENDPOINTS = {
+            "/api/v1/auth/**", "/api/v1/account"
+    };
+
     @Autowired
     AuthenticationProvider authenticationProvider;
 
@@ -29,8 +33,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/account").permitAll()
+                                .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
                                 .anyRequest()
                                 .authenticated()
                 )

@@ -1,7 +1,7 @@
 package com.example.authservice.controller;
 
 import com.example.authservice.model.Credential;
-import com.example.authservice.payload.req.RegisterRequest;
+import com.example.authservice.dto.req.RegisterRequest;
 import com.example.authservice.service.CredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

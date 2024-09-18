@@ -2,7 +2,7 @@ package com.example.userservice.service;
 
 import com.example.responsehandling.payload.response.AppResponse;
 import com.example.userservice.model.Doctor;
-import com.example.userservice.payload.ScheduleRequest;
+import com.example.userservice.dto.ScheduleRequest;
 
 import java.util.List;
 

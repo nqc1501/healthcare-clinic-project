@@ -2,8 +2,8 @@ package com.example.facilityscheduling.service.impl;
 
 import com.example.facilityscheduling.model.Schedule;
 import com.example.facilityscheduling.model.Shift;
-import com.example.facilityscheduling.payload.req.AppointmentRequest;
-import com.example.facilityscheduling.payload.req.ScheduleRequest;
+import com.example.facilityscheduling.dto.req.AppointmentRequest;
+import com.example.facilityscheduling.dto.req.ScheduleRequest;
 import com.example.facilityscheduling.repository.ScheduleRepository;
 import com.example.facilityscheduling.repository.ShiftRepository;
 import com.example.facilityscheduling.service.ShiftService;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.Date;
 import java.util.List;
 
 @Service

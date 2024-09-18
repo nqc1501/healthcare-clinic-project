@@ -1,7 +1,7 @@
 package com.example.healthcareservice.controller;
 
 import com.example.healthcareservice.model.item.Supply;
-import com.example.healthcareservice.payload.req.SupplyRequest;
+import com.example.healthcareservice.dto.req.SupplyRequest;
 import com.example.healthcareservice.service.SupplyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
